@@ -12,9 +12,21 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import {
+  connect,
+} from 'react-redux';
+import { getTrends } from './actions';
 
 /* eslint-disable react/prefer-stateless-function */
-export default class HomePage extends React.PureComponent {
+class HomePage extends React.PureComponent {
+  componentDidMount() {
+    const {
+      dispatch,
+    } = this.props;
+    console.log('mounted')
+    dispatch(getTrends())
+  }
+
   render() {
     return (
       <h1>
@@ -23,3 +35,5 @@ export default class HomePage extends React.PureComponent {
     );
   }
 }
+
+export default connect()(HomePage);
