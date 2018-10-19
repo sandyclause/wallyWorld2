@@ -16,6 +16,11 @@ import {
   connect,
 } from 'react-redux';
 import { getTrends } from './actions';
+import { compose } from 'redux';
+import saga from './saga';
+import reducer from './reducer';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
@@ -36,4 +41,8 @@ class HomePage extends React.PureComponent {
   }
 }
 
-export default connect()(HomePage);
+export default compose(
+  injectReducer({key: 'HomePage', reducer }),
+  injectSaga({key: 'HomePage', saga }),
+  connect(),
+)(HomePage);

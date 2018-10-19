@@ -44,7 +44,6 @@ export default function createReducer(injectedReducers) {
   return combineReducers({
     route: routeReducer,
     language: languageProviderReducer,
-    apiCall: apiCall,
     ...injectedReducers,
   });
 }
