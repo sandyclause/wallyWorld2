@@ -28,8 +28,8 @@ class HomePage extends React.PureComponent {
     const {
       dispatch,
     } = this.props;
-    console.log('mounted')
-    dispatch(getTrends())
+    console.log('mounted');
+    dispatch(getTrends());
   }
 
   render() {

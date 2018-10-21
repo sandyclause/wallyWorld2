@@ -1,8 +1,12 @@
 import axios from "axios";
 import Qs from "qs";
 
+import {
+  fromJS,
+} from 'immutable';
+
 export const fetchTrends = () => {
-  axios({
+  return axios({
     url: "https://proxy.hackeryou.com",
     method: "GET",
     dataResponse: "json",
@@ -21,6 +25,6 @@ export const fetchTrends = () => {
       xmlToJSON: false
     }
   }).then(res => {
-    console.log(res.data);
+    return fromJS(res.data);
   });
 }
