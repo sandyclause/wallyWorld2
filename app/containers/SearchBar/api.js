@@ -1,5 +1,8 @@
 import axios from "axios";
 import Qs from "qs";
+import {
+  apiKey
+} from '../../keys';
 
 import {
   fromJS,
@@ -18,7 +21,7 @@ export const fetchSearch = (query) => {
       reqUrl:
         "http://api.walmartlabs.com/v1/search",
       params: {
-        apiKey: "y3xen4j3dtzbq4n7snepx8h3",
+        apiKey: apiKey,
         query: query
       },
       proxyHeaders: {

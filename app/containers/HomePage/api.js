@@ -1,11 +1,15 @@
 import axios from "axios";
 import Qs from "qs";
+import {
+  apiKey
+} from '../../keys';
 
 import {
   fromJS,
 } from 'immutable';
 
 export const fetchTrends = () => {
+  
   return axios({
     url: "https://proxy.hackeryou.com",
     method: "GET",
@@ -17,7 +21,7 @@ export const fetchTrends = () => {
       reqUrl:
         "http://api.walmartlabs.com/v1/trends",
       params: {
-        apiKey: "y3xen4j3dtzbq4n7snepx8h3"
+        apiKey: apiKey
       },
       proxyHeaders: {
         headers_params: "value"

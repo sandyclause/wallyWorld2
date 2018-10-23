@@ -15,7 +15,6 @@ export function* apiCallSearch(action) {
     console.log(e);
     yield put(getSearchFailure(e));
   }
-
   return;
 }
 
