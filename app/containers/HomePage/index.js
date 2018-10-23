@@ -10,8 +10,6 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import {
   connect,
 } from 'react-redux';
@@ -21,6 +19,8 @@ import saga from './saga';
 import reducer from './reducer';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+
+import SearchBar from '../SearchBar';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
@@ -34,9 +34,12 @@ class HomePage extends React.PureComponent {
 
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+      <div>
+        <h1>
+          test
+        </h1>
+        <SearchBar />
+      </div>
     );
   }
 }
