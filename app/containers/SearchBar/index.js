@@ -13,7 +13,8 @@ import {
 
 import {
   Input,
-  withStyles
+  withStyles,
+  Button,
 } from '@material-ui/core';
 
 const styles = theme => ({
@@ -27,12 +28,31 @@ const styles = theme => ({
 })
 
 class SearchBar extends React.PureComponent {
+  constructor() {
+    super();
+
+    this.state = {
+      input: ''
+    }
+  }
+
   componentDidMount = () => {
     const {
       dispatch,
     } = this.props;
     console.log('searchMounted');
-    dispatch(getSearch('ipod'));
+    // dispatch(getSearch('ipod'));
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      input: e.currentTarget.value
+    });
+  }
+  
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('submit fired')
   }
 
   render() {
@@ -42,13 +62,17 @@ class SearchBar extends React.PureComponent {
 
     return (
       <div className={classes.conatiner}>
-        <Input
-          placeholder="Placeholder"
-          className={classes.input}
-          inputProps={{
-            'aria-label': 'Description',
-          }}
-        />
+        <form onSubmit={this.handleSubmit}>
+          <Input
+            placeholder="Placeholder"
+            className={classes.input}
+            inputProps={{
+              'aria-label': 'Description',
+            }}
+            onChange={this.handleChange}
+          />
+          <button>Search</button>
+        </form>
       </div>
     );
   }
