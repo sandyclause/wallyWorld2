@@ -9,7 +9,6 @@ import {
 } from 'immutable';
 
 export const fetchSearch = (query) => {
-  console.log('queryyyyy', query)
   return axios({
     url: "https://proxy.hackeryou.com",
     method: "GET",
@@ -30,6 +29,6 @@ export const fetchSearch = (query) => {
       xmlToJSON: false
     }
   }).then(res => {
-    console.log('searchResults', res.data)
+    return fromJS(res.data);
   });
 }

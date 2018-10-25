@@ -18,7 +18,7 @@ function apiCall(state = initialState, action) {
       console.log('reducer fireddd');
       return state;
     case GET_SEARCH_SUCCESS:
-      console.log('reducer search success');
+      console.log('reducer search success', action.payload);
       
       return initialState.set('searchData', action.payload);
     case GET_SEARCH_FAILURE:

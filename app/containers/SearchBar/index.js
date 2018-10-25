@@ -35,15 +35,7 @@ class SearchBar extends React.PureComponent {
       input: ''
     }
   }
-
-  componentDidMount = () => {
-    const {
-      dispatch,
-    } = this.props;
-    console.log('searchMounted');
-    // dispatch(getSearch('ipod'));
-  }
-
+  
   handleChange = (e) => {
     this.setState({
       input: e.currentTarget.value
@@ -51,7 +43,12 @@ class SearchBar extends React.PureComponent {
   }
   
   handleSubmit = (e) => {
+    const {
+      dispatch,
+    } = this.props;
     e.preventDefault();
+    const query = this.state.input;
+    dispatch(getSearch(query));
     console.log('submit fired')
   }
 
