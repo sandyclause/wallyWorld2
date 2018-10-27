@@ -13,10 +13,27 @@ const ProductCard = (props) => {
   } = props;
 
   const title = productData.get('name', 'untitled');
-  const review = productData.get('customerRating');
-  const price = productData.get('salePrice');
-  const thumbnailDefault = productData.get('thumbnailImage');
-  const customerRatingImage = productData.get('customerRatingImage');
+  const review = productData.get('customerRating', '');
+  const price = productData.get('salePrice', '');
+  const msrp = productData.get('msrp', '');
+  const thumbnailDefault = productData.get('thumbnailImage', '');
+  const customerRatingImage = productData.get('customerRatingImage', '');
+
+  const msrpGroup = msrp 
+    ? <Grid
+        container={true}
+        direction='row'
+        wrap='nowrap'
+        justify='flex-start'
+      >
+        <Typography>Was</Typography>
+        <Typography
+          className={classes.msrp}
+        >
+          ${msrp}
+        </Typography>
+      </Grid>
+    : null;
 
   return (
     <Paper>
@@ -62,6 +79,7 @@ const ProductCard = (props) => {
             {price}
           </Typography>
         </Grid>
+        {msrpGroup}
       </Grid>
     </Paper>
   )
@@ -79,7 +97,11 @@ const styles = {
   priceSign: {
     paddingTop: '10px',
     fontSize: '1.1rem',
-  }
+  },
+  msrp: {
+    textDecoration: 'line-through',
+    paddingLeft: '5px'
+  },
 }
 
 
