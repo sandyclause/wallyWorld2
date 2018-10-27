@@ -22,7 +22,7 @@ class TrendsGroupContainer extends React.PureComponent {
         container={true}
         direction='row'
         wrap='wrap'
-        justify='space-around'
+        justify='space-between'
       >
         {
           trendsData && trendsData.map((product, index) => {
