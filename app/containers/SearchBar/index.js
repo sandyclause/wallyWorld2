@@ -58,7 +58,7 @@ class SearchBar extends React.PureComponent {
     } = this.props;
 
     return (
-      <div className={classes.conatiner}>
+      <div className={classes.container}>
         <form onSubmit={this.handleSubmit}>
           <Input
             placeholder="Placeholder"

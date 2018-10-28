@@ -5,11 +5,14 @@ import {
   withStyles,
   Paper,
 } from '@material-ui/core';
+import { compose } from 'redux';
+import { withRouter } from "react-router";
 
 const ProductCard = (props) => {
   const {
     productData,
-    classes
+    classes,
+    history,
   } = props;
 
   const title = productData.get('name', 'untitled');
@@ -35,6 +38,11 @@ const ProductCard = (props) => {
       </Grid>
     : null;
 
+  const itemId = productData.get('itemId');
+  const handleClick = () => {
+    history.push(`/${itemId}`)
+  }
+
   return (
     <Paper>
       <Grid
@@ -42,6 +50,7 @@ const ProductCard = (props) => {
         direction='column'
         wrap='nowrap'
         className={classes.root}
+        onClick={handleClick}
       >
         <Grid
           container={true}
@@ -88,7 +97,8 @@ const ProductCard = (props) => {
 const styles = {
   root: {
     border: '1px solid red',
-    maxWidth: '140px'
+    maxWidth: '140px',
+    cursor: 'pointer',
   },
   price: {
     fontSize: '2rem',
@@ -105,4 +115,7 @@ const styles = {
 }
 
 
-export default withStyles(styles)(ProductCard);
+export default compose(
+  withStyles(styles),
+  withRouter,
+)(ProductCard);

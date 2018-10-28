@@ -16,12 +16,15 @@ import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import ProductDetail from 'containers/ProductDetail/Loadable';
+import Header from 'containers/Header/Loadable';
 
 export default function App() {
   return (
     <div>
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route path="/:itemId" component={ProductDetail} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
