@@ -9,7 +9,7 @@ class ProductDetail extends React.PureComponent {
   render() {
     
     return (
-      <p>test</p>
+      <p>product detail</p>
     );
   }
 }

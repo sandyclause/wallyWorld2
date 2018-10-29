@@ -44,7 +44,7 @@ class HomePage extends React.PureComponent {
         <h1>
           test
         </h1>
-        <SearchBar />
+        {/* <SearchBar /> */}
         <TrendsGroupContainer />
       </div>
     );

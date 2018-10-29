@@ -22,6 +22,7 @@ import Header from 'containers/Header/Loadable';
 export default function App() {
   return (
     <div>
+      <Route component={Header} />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/:itemId" component={ProductDetail} />

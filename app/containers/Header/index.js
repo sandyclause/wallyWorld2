@@ -21,9 +21,9 @@ class Header extends React.PureComponent {
     } = this.props;
 
     return (
-      <div>
-        header
+      <div style={{border: '1px solid red'}}>
         <SearchBar />
+        header
       </div>
     );
   }
