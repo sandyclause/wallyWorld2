@@ -25,7 +25,7 @@ export default function App() {
       <Route component={Header} />
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/:itemId" component={ProductDetail} />
+        <Route path="/productDetail/:itemId" component={ProductDetail} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

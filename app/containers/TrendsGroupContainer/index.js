@@ -8,7 +8,7 @@ import {
 import { compose } from 'redux';
 import {makeSelectTrends} from '../HomePage/selectors';
 
-import ProductCard from '../../components/ProductCard';
+import ProductCard from '../../containers/ProductCard';
 
 class TrendsGroupContainer extends React.PureComponent {
   
