@@ -3,6 +3,7 @@ import {
   connect,
 } from 'react-redux';
 import { compose } from 'redux';
+import { withRouter } from "react-router";
 import saga from './saga';
 import reducer from './reducer';
 import injectSaga from 'utils/injectSaga';
@@ -45,10 +46,12 @@ class SearchBar extends React.PureComponent {
   handleSubmit = (e) => {
     const {
       dispatch,
+      history,
     } = this.props;
     e.preventDefault();
     const query = this.state.input;
     dispatch(getSearch(query));
+    history.push(`/search/${query}`);
     console.log('submit fired')
   }
 
@@ -80,4 +83,5 @@ export default compose(
   injectSaga({key: 'SearchBar', saga }),
   connect(),
   withStyles(styles),
+  withRouter,
 )(SearchBar);

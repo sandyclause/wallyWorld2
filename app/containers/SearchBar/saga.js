@@ -7,12 +7,10 @@ import {
 } from './actions';
 
 export function* apiCallSearch(action) {
-  console.log(action)
   try {
     const data = yield call(fetchSearch, action.payload);
     yield put(getSearchSuccess(data));
   } catch(e) {
-    console.log(e);
     yield put(getSearchFailure(e));
   }
   return;

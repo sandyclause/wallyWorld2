@@ -12,7 +12,6 @@ export function* apiCallTrends() {
     const data = yield call(fetchTrends);
     yield put(getTrendsSuccess(data));
   } catch(e) {
-    console.log(e);
     yield put(getTrendsFailure(e));
   }
 
