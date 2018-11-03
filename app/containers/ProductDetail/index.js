@@ -10,6 +10,8 @@ import {
   Grid,
   Typography,
   withStyles,
+  CssBaseline,
+  Divider,
 } from '@material-ui/core';
 import decode from 'decode-html';
 import renderHTML from 'react-render-html';
@@ -30,7 +32,9 @@ class ProductDetail extends React.Component {
     const price = productData.get('salePrice', '');
     const msrp = productData.get('msrp', '');
     const shortDesc = productData.get('shortDescription');
-    const longDesc = renderHTML(decode(productData.get('longDescription')));
+
+    const longDesc = productData.get('longDescription');
+    const longDescDecoded = longDesc && renderHTML(decode(productData.get('longDescription')));
       
     const msrpGroup = msrp 
       ? <Grid
@@ -51,12 +55,18 @@ class ProductDetail extends React.Component {
       : null;
     
     return (
-      <Grid>
+      <Grid
+        container={true}
+        direction='column'
+        className={classes.root}
+      >
+        <CssBaseline />
         {/* picture and sideInfo containers */}
         <Grid
           container={true}
           direction='row'
           wrap='wrap'
+          className={classes.pictureSideInfoContainer}
         >
           {/* picture container */}
           <Grid
@@ -140,7 +150,8 @@ class ProductDetail extends React.Component {
           </Grid>
 
         </Grid>
-
+        
+        <Divider />
         {/* description and features */}
         <Grid
           container={true}
@@ -149,8 +160,12 @@ class ProductDetail extends React.Component {
         >
           <Grid
             container={true}
+            className={classes.descriptionTitleContainer}
           >
-            <Typography>
+            <Typography
+              variant='h5'
+              color='primary'
+            >
               Description & Features
             </Typography>
           </Grid>
@@ -177,7 +192,7 @@ class ProductDetail extends React.Component {
               lg={6}
             >
               {
-                longDesc
+                longDescDecoded
               }
             </Grid>
           </Grid>
@@ -188,6 +203,9 @@ class ProductDetail extends React.Component {
 }
 
 const styles = {
+  root: {
+    padding: '0 20px',
+  },
   priceSign: {
     fontSize: '1.6rem',
   },
@@ -197,6 +215,12 @@ const styles = {
   },
   titleContainer: {
     width: 'auto'
+  },
+  descriptionTitleContainer: {
+    margin: '20px 0'
+  },
+  pictureSideInfoContainer: {
+    margin: '50px 0'
   }
 }
 
