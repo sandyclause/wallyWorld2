@@ -12,6 +12,6 @@ export const getTrendsSuccess = (data) => ({
 })
 
 export const getTrendsFailure = (error) => ({
-  type: 'GET_TRENDS_FAILTURE',
+  type: 'GET_TRENDS_FAILURE',
   payload: error,
 })

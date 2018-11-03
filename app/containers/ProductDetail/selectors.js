@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
+import {
+  Map,
+} from 'immutable';
 
-// const selectMyState = () => createSelector(
-
-// );
-const productCardSelected = state => state.get('ProductCard');
+const productCardSelected = state => state.get('ProductCard', Map());
 
 const makeSelectProduct = createSelector(
   productCardSelected,
-  state => state.get('selectedProductData')
+  state => state.get('selectedProductData', Map())
 );
 
 export {

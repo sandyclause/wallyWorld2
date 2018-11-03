@@ -19,7 +19,6 @@ function apiCall(state = initialState, action) {
       return state;
     case GET_TRENDS_SUCCESS:
       console.log('reducer trends success');
-      
       return initialState.set('trendsData', action.payload);
     case GET_TRENDS_FAILURE:
       console.log('reducer trends failure');

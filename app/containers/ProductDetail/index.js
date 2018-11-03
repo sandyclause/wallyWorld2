@@ -3,9 +3,7 @@ import {
   connect,
 } from 'react-redux';
 import { compose } from 'redux';
-import {
-  makeSelectProduct
-} from './selectors';
+import { withRouter } from "react-router";
 import {
   Grid,
   Typography,
@@ -15,14 +13,43 @@ import {
 } from '@material-ui/core';
 import decode from 'decode-html';
 import renderHTML from 'react-render-html';
+import saga from './saga';
+import reducer from './reducer';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import {
+  makeSelectProduct
+} from './selectors';
+import {
+  getProduct
+} from './actions';
 
 class ProductDetail extends React.Component {
+  componentDidMount() {
+    const {
+      productData,
+      match,
+      dispatch,
+    } = this.props;
+
+    const itemId = match.params.itemId;
+    console.log(productData, itemId)
+
+
+    if (productData.size === 0) {
+      dispatch(getProduct(itemId))
+    } else {
+      return;
+    }
+  }
   
   render() {
     const {
       productData,
       classes,
     } = this.props;
+
+    console.log(productData)
 
     const title = productData.get('name');
     const ratingImageURL = productData.get('customerRatingImage');
@@ -231,6 +258,9 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
+  injectReducer({key: 'ProductCard', reducer }),
+  injectSaga({key: 'ProductDetail', saga }),
   withStyles(styles),
   connect(mapStateToProps),
+  withRouter,
 )(ProductDetail);
