@@ -13,16 +13,16 @@ import {
 } from '@material-ui/core';
 import decode from 'decode-html';
 import renderHTML from 'react-render-html';
-import saga from '../ProductCard/saga';
-import reducer from '../ProductCard/reducer';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
+import saga from '../../sagas/product';
+import reducer from '../../reducers/product';
 import {
   makeSelectProduct
-} from '../ProductCard/selectors';
+} from '../../selectors/product';
 import {
   getProduct
-} from '../ProductCard/actions';
+} from '../../actions/product';
 
 class ProductDetail extends React.Component {
   componentDidMount() {
@@ -258,8 +258,8 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-  injectReducer({key: 'ProductCard', reducer }),
-  injectSaga({key: 'ProductCard', saga }),
+  injectReducer({key: 'Product', reducer }),
+  injectSaga({key: 'Product', saga }),
   withStyles(styles),
   connect(mapStateToProps),
   withRouter,

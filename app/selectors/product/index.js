@@ -3,7 +3,7 @@ import {
   Map,
 } from 'immutable';
 
-const productCardSelected = state => state.get('ProductCard', Map());
+const productCardSelected = state => state.get('Product', Map());
 
 const makeSelectProduct = createSelector(
   productCardSelected,

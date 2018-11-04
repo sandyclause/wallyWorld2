@@ -10,11 +10,11 @@ import {
 } from '@material-ui/core';
 import { compose } from 'redux';
 import { withRouter } from "react-router";
-import reducer from './reducer';
+import reducer from '../../reducers/product';
 import injectReducer from 'utils/injectReducer';
 import {
   selectProduct
-} from './actions';
+} from '../../actions/product';
 
 class ProductCard extends React.PureComponent {
   handleClick = () => {
