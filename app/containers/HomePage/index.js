@@ -13,13 +13,12 @@ import React from 'react';
 import {
   connect,
 } from 'react-redux';
-import { getTrends } from './actions';
+import { getTrends } from '../../actions/product';
 import { compose } from 'redux';
-import saga from './saga';
-import reducer from './reducer';
+import saga from '../../sagas/product';
+import reducer from '../../reducers/product';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import {makeSelectTrends} from './selectors';
 
 import SearchBar from '../SearchBar';
 import TrendsGroupContainer from '../TrendsGroupContainer';
@@ -36,9 +35,6 @@ class HomePage extends React.PureComponent {
   }
   
   render() {
-    const {
-      trendsData,
-    } = this.props;
     return (
       <div>
         <h1>
@@ -51,14 +47,9 @@ class HomePage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    trendsData: makeSelectTrends(state)
-  }
-}
 
 export default compose(
-  injectReducer({key: 'HomePage', reducer }),
-  injectSaga({key: 'HomePage', saga }),
-  connect(mapStateToProps),
+  injectReducer({key: 'Product', reducer }),
+  injectSaga({key: 'Product', saga }),
+  connect(),
 )(HomePage);

@@ -6,7 +6,7 @@ import {
   connect,
 } from 'react-redux';
 import { compose } from 'redux';
-import {makeSelectTrends} from '../HomePage/selectors';
+import {makeSelectTrends} from '../../selectors/product';
 
 import ProductCard from '../../containers/ProductCard';
 
@@ -16,7 +16,6 @@ class TrendsGroupContainer extends React.PureComponent {
     const {
       trendsData,
     } = this.props;
-    
     return (
       <Grid
         container={true}
@@ -27,7 +26,7 @@ class TrendsGroupContainer extends React.PureComponent {
         {
           trendsData && trendsData.map((product, index) => {
             return <ProductCard productData={product} key={index} />
-          })
+          }).valueSeq().toArray()
         }
       </Grid>
     );

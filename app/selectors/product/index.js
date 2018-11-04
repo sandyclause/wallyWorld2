@@ -3,13 +3,19 @@ import {
   Map,
 } from 'immutable';
 
-const productCardSelected = state => state.get('Product', Map());
+const productState = state => state.get('Product', Map());
 
 const makeSelectProduct = createSelector(
-  productCardSelected,
+  productState,
   state => state.get('selectedProductData', Map())
+);
+
+const makeSelectTrends = createSelector(
+  productState,
+  state => state.getIn(['trendsData', 'items'], Map())
 );
 
 export {
   makeSelectProduct,
+  makeSelectTrends,
 };
