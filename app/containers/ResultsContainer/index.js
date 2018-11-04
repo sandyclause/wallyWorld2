@@ -6,11 +6,27 @@ import {
   connect,
 } from 'react-redux';
 import { compose } from 'redux';
-import {makeSelectSearchResults} from '../SearchBar/selectors';
+import {makeSelectSearchResults} from '../../selectors/product';
 
 import ProductCard from '../../containers/ProductCard';
+import {
+  getSearch
+} from '../../actions/product';
 
 class ResultsContainer extends React.PureComponent {
+  componentDidMount() {
+    const {
+      searchData,
+      dispatch,
+      match,
+    } = this.props;
+
+    const query = match.params.query;
+    console.log(searchData, query)
+    if (searchData.size === 0) {
+      dispatch(getSearch(query))
+    }
+  }
   
   render() {
     const {
@@ -27,7 +43,7 @@ class ResultsContainer extends React.PureComponent {
         {
           searchData && searchData.map((product, index) => {
             return <ProductCard productData={product} key={index} />
-          })
+          }).valueSeq().toArray()
         }
       </Grid>
     );

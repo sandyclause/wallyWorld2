@@ -6,6 +6,9 @@ import {
   GET_TRENDS_REQUESTED,
   getTrendsSuccess,
   getTrendsFailure,
+  GET_SEARCH_REQUESTED,
+  getSearchSuccess,
+  getSearchFailure,
 } from '../../actions/product';
 import axios from "axios";
 import Qs from "qs";
@@ -16,6 +19,8 @@ import {
   fromJS,
 } from 'immutable';
 
+
+// product
 export function* apiCallProduct(action) {
   console.log('search saga fired', action.payload)
   try {
@@ -28,6 +33,32 @@ export function* apiCallProduct(action) {
   return;
 }
 
+const fetchProduct = (itemId) => {
+    return axios({
+      url: "https://proxy.hackeryou.com",
+      method: "GET",
+      dataResponse: "json",
+      paramsSerializer: function (params) {
+        return Qs.stringify(params, { arrayFormat: "brackets" });
+      },
+      params: {
+        reqUrl:
+          `http://api.walmartlabs.com/v1/items/${itemId}`,
+        params: {
+          apiKey: apiKey
+        },
+        proxyHeaders: {
+          headers_params: "value"
+        },
+        xmlToJSON: false
+      }
+    }).then(res => {
+      return fromJS(res.data);
+    });
+  }
+
+
+// trends
 export function* apiCallTrends() {
   console.log('saga fired')
   try {
@@ -64,29 +95,43 @@ const fetchTrends = () => {
   });
 }
 
-const fetchProduct = (itemId) => {
-    return axios({
-      url: "https://proxy.hackeryou.com",
-      method: "GET",
-      dataResponse: "json",
-      paramsSerializer: function (params) {
-        return Qs.stringify(params, { arrayFormat: "brackets" });
-      },
-      params: {
-        reqUrl:
-          `http://api.walmartlabs.com/v1/items/${itemId}`,
-        params: {
-          apiKey: apiKey
-        },
-        proxyHeaders: {
-          headers_params: "value"
-        },
-        xmlToJSON: false
-      }
-    }).then(res => {
-      return fromJS(res.data);
-    });
+
+//search
+export function* apiCallSearch(action) {
+  try {
+    const data = yield call(fetchSearch, action.payload);
+    yield put(getSearchSuccess(data));
+  } catch(e) {
+    yield put(getSearchFailure(e));
   }
+  return;
+}
+
+const fetchSearch = (query) => {
+  return axios({
+    url: "https://proxy.hackeryou.com",
+    method: "GET",
+    dataResponse: "json",
+    paramsSerializer: function(params) {
+      return Qs.stringify(params, { arrayFormat: "brackets" });
+    },
+    params: {
+      reqUrl:
+        "http://api.walmartlabs.com/v1/search",
+      params: {
+        apiKey: apiKey,
+        query: query
+      },
+      proxyHeaders: {
+        headers_params: "value"
+      },
+      xmlToJSON: false
+    }
+  }).then(res => {
+    return fromJS(res.data);
+  });
+}
+
 
 // Root saga
 export default function* rootSaga() {
@@ -94,5 +139,6 @@ export default function* rootSaga() {
   yield [
     takeLatest(GET_PRODUCT_REQUESTED, apiCallProduct),
     takeLatest(GET_TRENDS_REQUESTED, apiCallTrends),
+    takeLatest(GET_SEARCH_REQUESTED, apiCallSearch),
   ];
 }

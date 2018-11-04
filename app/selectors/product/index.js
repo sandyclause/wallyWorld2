@@ -15,7 +15,13 @@ const makeSelectTrends = createSelector(
   state => state.getIn(['trendsData', 'items'], Map())
 );
 
+const makeSelectSearchResults = createSelector(
+  productState,
+  state => state.getIn(['searchData', 'items'], Map())
+);
+
 export {
   makeSelectProduct,
   makeSelectTrends,
+  makeSelectSearchResults,
 };

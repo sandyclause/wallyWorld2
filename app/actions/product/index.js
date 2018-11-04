@@ -7,6 +7,9 @@ export const GET_TRENDS_REQUESTED = 'GET_TRENDS_REQUESTED';
 export const GET_TRENDS_SUCCESS = 'GET_TRENDS_SUCCESS';
 export const GET_TRENDS_FAILURE = 'GET_TRENDS_FAILURE';
 
+export const GET_SEARCH_REQUESTED = 'GET_SEARCH_REQUESTED';
+export const GET_SEARCH_SUCCESS = 'GET_SEARCH_SUCCESS';
+export const GET_SEARCH_FAILURE = 'GET_SEARCH_FAILURE';
 
 export const selectProduct = (query) => ({
   type: 'SELECT_PRODUCT',
@@ -39,5 +42,20 @@ export const getTrendsSuccess = (data) => ({
 
 export const getTrendsFailure = (error) => ({
   type: 'GET_TRENDS_FAILURE',
+  payload: error,
+})
+
+export const getSearch = (query) => ({
+  type: 'GET_SEARCH_REQUESTED',
+  payload: query,
+})
+
+export const getSearchSuccess = (data) => ({
+  type: 'GET_SEARCH_SUCCESS',
+  payload: data,
+})
+
+export const getSearchFailure = (error) => ({
+  type: 'GET_SEARCH_FAILTURE',
   payload: error,
 })
