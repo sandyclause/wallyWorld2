@@ -33,14 +33,16 @@ class ProductDetail extends React.Component {
     } = this.props;
 
     const itemId = match.params.itemId;
-    console.log(productData, itemId)
 
-
+    const variants = productData.get('variants');
+    console.log(productData, variants)
     if (productData.size === 0) {
       dispatch(getProduct(itemId))
+      console.log(productData, variants)
     } else {
       return;
     }
+
   }
   
   render() {
@@ -48,8 +50,6 @@ class ProductDetail extends React.Component {
       productData,
       classes,
     } = this.props;
-
-    console.log(productData)
 
     const title = productData.get('name');
     const ratingImageURL = productData.get('customerRatingImage');

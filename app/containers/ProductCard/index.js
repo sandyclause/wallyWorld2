@@ -132,7 +132,7 @@ const styles = {
 
 
 export default compose(
-  injectReducer({key: 'ProductCard', reducer }),
+  injectReducer({key: 'Product', reducer }),
   connect(),
   withStyles(styles),
   withRouter,

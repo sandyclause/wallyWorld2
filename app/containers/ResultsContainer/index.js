@@ -22,7 +22,7 @@ class ResultsContainer extends React.PureComponent {
     } = this.props;
 
     const query = match.params.query;
-    console.log(searchData, query)
+    
     if (searchData.size === 0) {
       dispatch(getSearch(query))
     }
