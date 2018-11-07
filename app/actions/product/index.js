@@ -15,7 +15,7 @@ export const GET_VARIANT_REQUESTED = 'GET_VARIANT_REQUESTED';
 export const GET_VARIANT_SUCCESS = 'GET_VARIANT_SUCCESS';
 export const GET_VARIANT_FAILURE = 'GET_VARIANT_FAILURE';
 
-export const selectProduct = (query) => ({
+export const selectProductAction = (query) => ({
   type: 'SELECT_PRODUCT',
   payload: query,
 })

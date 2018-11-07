@@ -1,4 +1,9 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects';
+import {
+  takeLatest,
+  call,
+  put,
+  all,
+} from 'redux-saga/effects';
 import {
   GET_PRODUCT_REQUESTED,
   getProductSuccess,
@@ -15,6 +20,7 @@ import {
   GET_VARIANT_REQUESTED,
   GET_VARIANT_SUCCESS,
   GET_VARIANT_FAILURE,
+  SELECT_PRODUCT,
 } from '../../actions/product';
 import axios from "axios";
 import Qs from "qs";
@@ -23,17 +29,22 @@ import {
 } from '../../keys';
 import {
   fromJS,
+  List,
 } from 'immutable';
 
 
 // product
 export function* apiCallProduct(action) {
-  console.log('search saga fired', action.payload)
+  console.log('product saga fired', action.payload)
   try {
     const data = yield call(fetchProduct, action.payload);
     const variants = data.get('variants');
     yield put(getProductSuccess(data));
-    yield put(getVariant(variants));
+    if (variants !== undefined) {
+      yield put(getVariant(variants));
+    } else {
+      return;
+    }
   } catch(e) {
     yield put(getProductFailure(e));
   }
@@ -41,37 +52,37 @@ export function* apiCallProduct(action) {
 }
 
 const fetchProduct = (itemId) => {
-    return axios({
-      url: "https://proxy.hackeryou.com",
-      method: "GET",
-      dataResponse: "json",
-      paramsSerializer: function (params) {
-        return Qs.stringify(params, { arrayFormat: "brackets" });
-      },
+  return axios({
+    url: "https://proxy.hackeryou.com",
+    method: "GET",
+    dataResponse: "json",
+    paramsSerializer: function (params) {
+      return Qs.stringify(params, { arrayFormat: "brackets" });
+    },
+    params: {
+      reqUrl:
+        `http://api.walmartlabs.com/v1/items/${itemId}`,
       params: {
-        reqUrl:
-          `http://api.walmartlabs.com/v1/items/${itemId}`,
-        params: {
-          apiKey: apiKey
-        },
-        proxyHeaders: {
-          headers_params: "value"
-        },
-        xmlToJSON: false
-      }
-    }).then(res => {
-      return fromJS(res.data);
-    });
-  }
+        apiKey: apiKey
+      },
+      proxyHeaders: {
+        headers_params: "value"
+      },
+      xmlToJSON: false
+    }
+  }).then(res => {
+    return fromJS(res.data);
+  });
+}
 
 
 // variants
 export function* apiCallVariants(variants) {
-  const variantsArray = variants.payload.get('0');
+  console.log('api call variants')
+  const variantsArray = variants.payload;
   try {
-    console.log(variantsArray)
-    const variantsData = yield call(fetchVariants, variantsArray);
-    yield put(getVariantSuccess(variantsData));
+    const variantsData = yield all(variantsArray.map(variant => fetchVariants(variant)).toArray());
+    yield put(getVariantSuccess(List(variantsData)));
   } catch(e) {
     yield put(getVariantFailure(e));
     console.log(e)
@@ -81,6 +92,7 @@ export function* apiCallVariants(variants) {
 }
 
 const fetchVariants = (params) => {
+  console.log('fetch variants func ------------------')
   return axios({
     url: "https://proxy.hackeryou.com",
     method: "GET",
@@ -108,7 +120,7 @@ const fetchVariants = (params) => {
 
 // trends
 export function* apiCallTrends() {
-  console.log('saga fired')
+  console.log('callTrends saga fired')
   try {
     const data = yield call(fetchTrends);
     yield put(getTrendsSuccess(data));
@@ -120,6 +132,7 @@ export function* apiCallTrends() {
 }
 
 const fetchTrends = () => {
+  console.log('fetch Trends func----------------')
   return axios({
     url: "https://proxy.hackeryou.com",
     method: "GET",
@@ -181,6 +194,17 @@ const fetchSearch = (query) => {
 }
 
 
+export function* selectProductSaga(query) {
+  console.log('select product saga called', query);
+  // const variants = query.payload.get('variants');
+  // if (variants !== undefined) {
+  //   yield put(getVariant(variants));
+  // } else {
+  //   return;
+  // }
+}
+
+
 // Root saga
 export default function* rootSaga() {
   // if necessary, start multiple sagas at once with `all`
@@ -189,5 +213,6 @@ export default function* rootSaga() {
     takeLatest(GET_TRENDS_REQUESTED, apiCallTrends),
     takeLatest(GET_SEARCH_REQUESTED, apiCallSearch),
     takeLatest(GET_VARIANT_REQUESTED, apiCallVariants),
+    takeLatest(SELECT_PRODUCT, selectProductSaga)
   ];
 }

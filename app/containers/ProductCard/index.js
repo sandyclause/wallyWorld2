@@ -10,10 +10,12 @@ import {
 } from '@material-ui/core';
 import { compose } from 'redux';
 import { withRouter } from "react-router";
-import reducer from '../../reducers/product';
-import injectReducer from 'utils/injectReducer';
+// import injectReducer from 'utils/injectReducer';
+// import injectSaga from 'utils/injectSaga';
+// import saga from '../../sagas/product';
+// import reducer from '../../reducers/product';
 import {
-  selectProduct
+  selectProductAction
 } from '../../actions/product';
 
 class ProductCard extends React.PureComponent {
@@ -26,7 +28,7 @@ class ProductCard extends React.PureComponent {
 
     const itemId = productData.get('itemId');
     history.push(`/productDetail/${itemId}`);
-    dispatch(selectProduct(productData));
+    dispatch(selectProductAction(productData));
   }
 
   render(){
@@ -132,7 +134,8 @@ const styles = {
 
 
 export default compose(
-  injectReducer({key: 'Product', reducer }),
+  // injectReducer({key: 'ProductCard', reducer }),
+  // injectSaga({key: 'ProductCard', saga }),
   connect(),
   withStyles(styles),
   withRouter,

@@ -31,7 +31,7 @@ import {
       case SELECT_PRODUCT:
         return state.set('selectedProductData', action.payload);
       case GET_PRODUCT_REQUESTED:
-        console.log('reducer fireddd');
+        console.log('get product reducer fireddd');
         return state;
       case GET_PRODUCT_SUCCESS:
         console.log('reducer product success');

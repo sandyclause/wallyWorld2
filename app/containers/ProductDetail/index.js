@@ -13,10 +13,10 @@ import {
 } from '@material-ui/core';
 import decode from 'decode-html';
 import renderHTML from 'react-render-html';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
-import saga from '../../sagas/product';
-import reducer from '../../reducers/product';
+// import injectReducer from 'utils/injectReducer';
+// import injectSaga from 'utils/injectSaga';
+// import saga from '../../sagas/product';
+// import reducer from '../../reducers/product';
 import {
   makeSelectProduct
 } from '../../selectors/product';
@@ -24,7 +24,7 @@ import {
   getProduct
 } from '../../actions/product';
 
-class ProductDetail extends React.Component {
+class ProductDetail extends React.PureComponent {
   componentDidMount() {
     const {
       productData,
@@ -38,7 +38,6 @@ class ProductDetail extends React.Component {
     console.log(productData, variants)
     if (productData.size === 0) {
       dispatch(getProduct(itemId))
-      console.log(productData, variants)
     } else {
       return;
     }
@@ -258,8 +257,8 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-  injectReducer({key: 'Product', reducer }),
-  injectSaga({key: 'Product', saga }),
+  // injectReducer({key: 'ProductDetail', reducer }),
+  // injectSaga({key: 'ProductDetail', saga }),
   withStyles(styles),
   connect(mapStateToProps),
   withRouter,

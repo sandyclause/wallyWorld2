@@ -20,9 +20,12 @@ import ProductDetail from 'containers/ProductDetail/Loadable';
 import Header from 'containers/Header/Loadable';
 import ResultsContainer from 'containers/ResultsContainer/Loadable';
 
+import ProductModule from '../../ProductModule';
+
 export default function App() {
   return (
     <div>
+      <ProductModule />
       <Route component={Header} />
       <Switch>
         <Route exact path="/" component={HomePage} />
