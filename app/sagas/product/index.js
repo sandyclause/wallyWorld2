@@ -21,6 +21,7 @@ import {
   GET_VARIANT_SUCCESS,
   GET_VARIANT_FAILURE,
   SELECT_PRODUCT,
+  getVariantClear,
 } from '../../actions/product';
 import axios from "axios";
 import Qs from "qs";
@@ -78,17 +79,23 @@ const fetchProduct = (itemId) => {
 
 // variants
 export function* apiCallVariants(variants) {
-  console.log('api call variants')
-  const variantsArray = variants.payload;
-  try {
-    const variantsData = yield all(variantsArray.map(variant => fetchVariants(variant)).toArray());
-    yield put(getVariantSuccess(List(variantsData)));
-  } catch(e) {
-    yield put(getVariantFailure(e));
-    console.log(e)
-  }
-  return;
+  console.log('api call variants', variants.payload)
 
+  if (variants.payload !== -1) {
+    const variantsArray = variants.payload;
+    const limitedVariantsArray = variantsArray.slice(0,5);
+    console.log(variantsArray, limitedVariantsArray)
+
+    try {
+      const variantsData = yield all(limitedVariantsArray.map(variant => fetchVariants(variant)).toArray());
+      yield put(getVariantSuccess(List(variantsData)));
+    } catch(e) {
+      yield put(getVariantFailure(e));
+      console.log(e)
+    }
+  } else {
+    return;
+  }
 }
 
 const fetchVariants = (params) => {
@@ -195,13 +202,12 @@ const fetchSearch = (query) => {
 
 
 export function* selectProductSaga(query) {
-  console.log('select product saga called', query);
-  // const variants = query.payload.get('variants');
-  // if (variants !== undefined) {
-  //   yield put(getVariant(variants));
-  // } else {
-  //   return;
-  // }
+  const variants = query.payload.get('variants');
+  if (variants !== undefined) {
+    yield put(getVariant(variants));
+  } else {
+    yield put(getVariantClear());
+  }
 }
 
 

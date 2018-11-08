@@ -13,16 +13,14 @@ import {
 } from '@material-ui/core';
 import decode from 'decode-html';
 import renderHTML from 'react-render-html';
-// import injectReducer from 'utils/injectReducer';
-// import injectSaga from 'utils/injectSaga';
-// import saga from '../../sagas/product';
-// import reducer from '../../reducers/product';
 import {
-  makeSelectProduct
+  makeSelectProduct,
+  makeSelectVariants,
 } from '../../selectors/product';
 import {
   getProduct
 } from '../../actions/product';
+import ProductCard from '../ProductCard';
 
 class ProductDetail extends React.PureComponent {
   componentDidMount() {
@@ -48,6 +46,7 @@ class ProductDetail extends React.PureComponent {
     const {
       productData,
       classes,
+      variantsData,
     } = this.props;
 
     const title = productData.get('name');
@@ -78,6 +77,15 @@ class ProductDetail extends React.PureComponent {
             ${msrp}
           </Typography>
         </Grid>
+      : null;
+
+    const variants = variantsData && variantsData
+      ? variantsData.map((variant, index) => {
+        return <ProductCard
+          productData={variant}
+          key={index}
+        />
+        }).valueSeq().toArray()
       : null;
     
     return (
@@ -206,6 +214,7 @@ class ProductDetail extends React.PureComponent {
             <Grid
               item={true}
               lg={6}
+              md={6}
             >
               <Typography>
                 {
@@ -216,11 +225,22 @@ class ProductDetail extends React.PureComponent {
             <Grid
               item={true}
               lg={6}
+              md={6}
             >
               {
                 longDescDecoded
               }
             </Grid>
+          </Grid>
+
+          {/* variants */}
+          <Grid
+            container={true}
+            direction='row'
+            wrap='wrap'
+            justify='space-around'
+          >
+            {variants}
           </Grid>
         </Grid>
       </Grid>
@@ -253,12 +273,11 @@ const styles = {
 const mapStateToProps = (state) => {
   return {
     productData: makeSelectProduct(state),
+    variantsData: makeSelectVariants(state),
   }
 }
 
 export default compose(
-  // injectReducer({key: 'ProductDetail', reducer }),
-  // injectSaga({key: 'ProductDetail', saga }),
   withStyles(styles),
   connect(mapStateToProps),
   withRouter,

@@ -4,10 +4,6 @@ import {
 } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from "react-router";
-// import saga from '../../sagas/product';
-// import reducer from '../../reducers/product';
-// import injectSaga from 'utils/injectSaga';
-// import injectReducer from 'utils/injectReducer';
 import {
   getSearch
 } from '../../actions/product';
@@ -79,8 +75,6 @@ class SearchBar extends React.PureComponent {
 }
 
 export default compose(
-  // injectReducer({key: 'SearchBar', reducer }),
-  // injectSaga({key: 'SearchBar', saga }),
   connect(),
   withStyles(styles),
   withRouter,

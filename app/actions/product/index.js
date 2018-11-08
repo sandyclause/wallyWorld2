@@ -14,6 +14,7 @@ export const GET_SEARCH_FAILURE = 'GET_SEARCH_FAILURE';
 export const GET_VARIANT_REQUESTED = 'GET_VARIANT_REQUESTED';
 export const GET_VARIANT_SUCCESS = 'GET_VARIANT_SUCCESS';
 export const GET_VARIANT_FAILURE = 'GET_VARIANT_FAILURE';
+export const GET_VARIANT_CLEAR = 'GET_VARIANT_CLEAR';
 
 export const selectProductAction = (query) => ({
   type: 'SELECT_PRODUCT',
@@ -76,5 +77,10 @@ export const getVariantSuccess = (data) => ({
 
 export const getVariantFailure = (error) => ({
   type: 'GET_VARIANT_FAILTURE',
+  payload: error,
+})
+
+export const getVariantClear = (error) => ({
+  type: 'GET_VARIANT_CLEAR',
   payload: error,
 })

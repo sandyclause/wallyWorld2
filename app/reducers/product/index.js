@@ -1,6 +1,6 @@
 import {
   fromJS,
-  set,
+  List,
 } from 'immutable';
 import {
   SELECT_PRODUCT,
@@ -16,6 +16,7 @@ import {
   GET_VARIANT_REQUESTED,
   GET_VARIANT_SUCCESS,
   GET_VARIANT_FAILURE,
+  GET_VARIANT_CLEAR,
 } from '../../actions/product';
   
   export const initialState = fromJS({
@@ -72,6 +73,9 @@ import {
       case GET_VARIANT_FAILURE:
         console.log('reducer variant failure');
         return state;
+      case GET_VARIANT_CLEAR:
+        console.log('reducer variant cleared');
+        return state.set('variantData', List());
       default:
         return state;
       }

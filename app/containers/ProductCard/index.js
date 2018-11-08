@@ -9,11 +9,8 @@ import {
   Paper,
 } from '@material-ui/core';
 import { compose } from 'redux';
+import PropTypes from 'prop-types';
 import { withRouter } from "react-router";
-// import injectReducer from 'utils/injectReducer';
-// import injectSaga from 'utils/injectSaga';
-// import saga from '../../sagas/product';
-// import reducer from '../../reducers/product';
 import {
   selectProductAction
 } from '../../actions/product';
@@ -41,7 +38,7 @@ class ProductCard extends React.PureComponent {
     const review = productData.get('customerRating', '');
     const price = productData.get('salePrice', '');
     const msrp = productData.get('msrp', '');
-    const thumbnailDefault = productData.get('thumbnailImage', '');
+    const thumbnailDefault = productData.get('mediumImage', '');
     const customerRatingImage = productData.get('customerRatingImage', '');
   
     const msrpGroup = msrp 
@@ -73,7 +70,9 @@ class ProductCard extends React.PureComponent {
             container={true}
             justify='center'
           >
-            <img src={thumbnailDefault} alt={`thumbnail image of ${title}`}/>
+            <div>
+              <img src={thumbnailDefault} alt={`thumbnail image of ${title}`}/>
+            </div>
           </Grid>
           <Typography
             variant='subtitle1'
@@ -115,7 +114,7 @@ class ProductCard extends React.PureComponent {
 const styles = {
   root: {
     border: '1px solid red',
-    maxWidth: '140px',
+    maxWidth: '240px',
     cursor: 'pointer',
   },
   price: {
@@ -132,10 +131,11 @@ const styles = {
   },
 }
 
+ProductCard.propTypes = {
+  productData: PropTypes.object.isRequired,
+}
 
 export default compose(
-  // injectReducer({key: 'ProductCard', reducer }),
-  // injectSaga({key: 'ProductCard', saga }),
   connect(),
   withStyles(styles),
   withRouter,

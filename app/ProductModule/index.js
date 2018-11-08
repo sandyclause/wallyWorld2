@@ -10,7 +10,7 @@ class ProductModule extends React.PureComponent {
   render() {
 
     return (
-      <p>product module injected</p>
+      <div></div>
     )
   }
 }

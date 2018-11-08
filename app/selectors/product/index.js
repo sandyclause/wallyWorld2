@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import {
   Map,
+  List,
 } from 'immutable';
 
 const productState = state => state.get('Product', Map());
@@ -20,8 +21,14 @@ const makeSelectSearchResults = createSelector(
   state => state.getIn(['searchData', 'items'], Map())
 );
 
+const makeSelectVariants = createSelector(
+  productState,
+  state => state.get('variantData', List())
+);
+
 export {
   makeSelectProduct,
   makeSelectTrends,
   makeSelectSearchResults,
+  makeSelectVariants,
 };
