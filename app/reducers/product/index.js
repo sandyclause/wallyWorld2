@@ -17,6 +17,9 @@ import {
   GET_VARIANT_SUCCESS,
   GET_VARIANT_FAILURE,
   GET_VARIANT_CLEAR,
+  GET_REVIEWS_REQUESTED,
+  GET_REVIEWS_SUCCESS,
+  GET_REVIEWS_FAILURE,
 } from '../../actions/product';
   
   export const initialState = fromJS({
@@ -24,6 +27,7 @@ import {
     trendsData: {},
     searchData: {},
     variantData: {},
+    reviewsData: {},
   });
   
   function selectProduct(state = initialState, action) {
@@ -54,7 +58,7 @@ import {
 
       // search
       case GET_SEARCH_REQUESTED:
-        console.log('reducer fireddd');
+        console.log('get search requested');
         return state;
       case GET_SEARCH_SUCCESS:
         console.log('reducer search success', action.payload);
@@ -65,7 +69,7 @@ import {
 
       // variant
       case GET_VARIANT_REQUESTED:
-        console.log('reducer fireddd');
+        console.log('get variant requested');
         return state;
       case GET_VARIANT_SUCCESS:
         console.log('reducer variant success', action.payload);
@@ -76,6 +80,18 @@ import {
       case GET_VARIANT_CLEAR:
         console.log('reducer variant cleared');
         return state.set('variantData', List());
+
+      // reviews
+      case GET_REVIEWS_REQUESTED:
+      console.log('get REVIEWS requested');
+      return state;
+      case GET_REVIEWS_SUCCESS:
+        console.log('reducer REVIEWS success', action.payload);
+        return state.set('reviewsData', action.payload);
+      case GET_REVIEWS_FAILURE:
+        console.log('reducer REVIEWS failure');
+        return state;
+
       default:
         return state;
       }

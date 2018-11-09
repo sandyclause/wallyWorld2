@@ -16,6 +16,25 @@ export const GET_VARIANT_SUCCESS = 'GET_VARIANT_SUCCESS';
 export const GET_VARIANT_FAILURE = 'GET_VARIANT_FAILURE';
 export const GET_VARIANT_CLEAR = 'GET_VARIANT_CLEAR';
 
+export const GET_REVIEWS_REQUESTED = 'GET_REVIEWS_REQUESTED';
+export const GET_REVIEWS_SUCCESS = 'GET_REVIEWS_SUCCESS';
+export const GET_REVIEWS_FAILURE = 'GET_REVIEWS_FAILURE';
+
+export const getReviews = (query) => ({
+  type: 'GET_REVIEWS_REQUESTED',
+  payload: query,
+})
+
+export const getReviewsSuccess = (data) => ({
+  type: 'GET_REVIEWS_SUCCESS',
+  payload: data,
+})
+
+export const getReviewsFailure = (error) => ({
+  type: 'GET_REVIEWS_FAILURE',
+  payload: error,
+})
+
 export const selectProductAction = (query) => ({
   type: 'SELECT_PRODUCT',
   payload: query,

@@ -22,6 +22,12 @@ import {
   GET_VARIANT_FAILURE,
   SELECT_PRODUCT,
   getVariantClear,
+  GET_REVIEWS_REQUESTED,
+  GET_REVIEWS_SUCCESS,
+  GET_REVIEWS_FAILURE,
+  getReviewsSuccess,
+  getReviewsFailure,
+  getReviews,
 } from '../../actions/product';
 import axios from "axios";
 import Qs from "qs";
@@ -33,6 +39,41 @@ import {
   List,
 } from 'immutable';
 
+// reviews
+export function* apiCallReviews(action) {
+  console.log('review saga fired', action.payload)
+  try {
+    const data = yield call(fetchReviews, action.payload);
+    yield put(getReviewsSuccess(data));
+  } catch(e) {
+    yield put(getProductFailure(e));
+  }
+}
+
+const fetchReviews = (itemId) => {
+  return axios({
+    url: "https://proxy.hackeryou.com",
+    method: "GET",
+    dataResponse: "json",
+    paramsSerializer: function (params) {
+      return Qs.stringify(params, { arrayFormat: "brackets" });
+    },
+    params: {
+      reqUrl: `http://api.walmartlabs.com/v1/reviews/${
+        itemId
+      }`,
+      params: {
+        apiKey: apiKey
+      },
+      proxyHeaders: {
+        headers_params: "value"
+      },
+      xmlToJSON: false
+    }
+  }).then(res => {
+    return fromJS(res.data);
+  });
+}
 
 // product
 export function* apiCallProduct(action) {
@@ -49,7 +90,10 @@ export function* apiCallProduct(action) {
   } catch(e) {
     yield put(getProductFailure(e));
   }
-  return;
+  
+  // call reviews
+  console.log('called?????')
+  yield put(getReviews(action.payload));
 }
 
 const fetchProduct = (itemId) => {
@@ -79,13 +123,17 @@ const fetchProduct = (itemId) => {
 
 // variants
 export function* apiCallVariants(variants) {
-  console.log('api call variants', variants.payload)
+  console.log('api call variants', variants.payload);
+
+  // delay because calls are limited to 5 per second by api
+  const delay = (ms) => new Promise(res => setTimeout(res, ms))
 
   if (variants.payload !== -1) {
     const variantsArray = variants.payload;
     const limitedVariantsArray = variantsArray.slice(0,5);
     console.log(variantsArray, limitedVariantsArray)
 
+    yield delay(500);
     try {
       const variantsData = yield all(limitedVariantsArray.map(variant => fetchVariants(variant)).toArray());
       yield put(getVariantSuccess(List(variantsData)));
@@ -202,12 +250,17 @@ const fetchSearch = (query) => {
 
 
 export function* selectProductSaga(query) {
+  console.log('select product saga', query)
   const variants = query.payload.get('variants');
   if (variants !== undefined) {
     yield put(getVariant(variants));
   } else {
     yield put(getVariantClear());
   }
+
+  // call reviews
+  const itemId = query.payload.get('itemId');
+  yield put(getReviews(itemId));
 }
 
 
@@ -219,6 +272,7 @@ export default function* rootSaga() {
     takeLatest(GET_TRENDS_REQUESTED, apiCallTrends),
     takeLatest(GET_SEARCH_REQUESTED, apiCallSearch),
     takeLatest(GET_VARIANT_REQUESTED, apiCallVariants),
-    takeLatest(SELECT_PRODUCT, selectProductSaga)
+    takeLatest(SELECT_PRODUCT, selectProductSaga),
+    takeLatest(GET_REVIEWS_REQUESTED, apiCallReviews)
   ];
 }
