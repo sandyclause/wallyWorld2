@@ -3,7 +3,6 @@ import {
   List,
 } from 'immutable';
 import {
-  SELECT_PRODUCT,
   GET_PRODUCT_REQUESTED,
   GET_PRODUCT_SUCCESS,
   GET_PRODUCT_FAILURE,
@@ -33,8 +32,6 @@ import {
   function selectProduct(state = initialState, action) {
     switch (action.type) {
       // product
-      case SELECT_PRODUCT:
-        return state.set('selectedProductData', action.payload);
       case GET_PRODUCT_REQUESTED:
         console.log('get product reducer fireddd');
         return state;

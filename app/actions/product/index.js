@@ -1,4 +1,3 @@
-export const SELECT_PRODUCT = 'SELECT_PRODUCT';
 export const GET_PRODUCT_REQUESTED = 'GET_PRODUCT_REQUESTED';
 export const GET_PRODUCT_SUCCESS = 'GET_PRODUCT_SUCCESS';
 export const GET_PRODUCT_FAILURE = 'GET_PRODUCT_FAILURE';
@@ -33,11 +32,6 @@ export const getReviewsSuccess = (data) => ({
 export const getReviewsFailure = (error) => ({
   type: 'GET_REVIEWS_FAILURE',
   payload: error,
-})
-
-export const selectProductAction = (query) => ({
-  type: 'SELECT_PRODUCT',
-  payload: query,
 })
 
 export const getProduct = (itemId) => ({
@@ -99,7 +93,6 @@ export const getVariantFailure = (error) => ({
   payload: error,
 })
 
-export const getVariantClear = (error) => ({
+export const getVariantClear = () => ({
   type: 'GET_VARIANT_CLEAR',
-  payload: error,
 })

@@ -12,7 +12,7 @@ import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router";
 import {
-  selectProductAction
+  getProduct,
 } from '../../actions/product';
 
 class ProductCard extends React.PureComponent {
@@ -25,7 +25,7 @@ class ProductCard extends React.PureComponent {
 
     const itemId = productData.get('itemId');
     history.push(`/productDetail/${itemId}`);
-    dispatch(selectProductAction(productData));
+    dispatch(getProduct(itemId));
   }
 
   render(){

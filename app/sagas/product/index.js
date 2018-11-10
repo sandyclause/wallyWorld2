@@ -20,7 +20,6 @@ import {
   GET_VARIANT_REQUESTED,
   GET_VARIANT_SUCCESS,
   GET_VARIANT_FAILURE,
-  SELECT_PRODUCT,
   getVariantClear,
   GET_REVIEWS_REQUESTED,
   GET_REVIEWS_SUCCESS,
@@ -85,14 +84,13 @@ export function* apiCallProduct(action) {
     if (variants !== undefined) {
       yield put(getVariant(variants));
     } else {
-      return;
+      yield put(getVariantClear());
     }
   } catch(e) {
     yield put(getProductFailure(e));
   }
   
   // call reviews
-  console.log('called?????')
   yield put(getReviews(action.payload));
 }
 
@@ -248,22 +246,6 @@ const fetchSearch = (query) => {
   });
 }
 
-
-export function* selectProductSaga(query) {
-  console.log('select product saga', query)
-  const variants = query.payload.get('variants');
-  if (variants !== undefined) {
-    yield put(getVariant(variants));
-  } else {
-    yield put(getVariantClear());
-  }
-
-  // call reviews
-  const itemId = query.payload.get('itemId');
-  yield put(getReviews(itemId));
-}
-
-
 // Root saga
 export default function* rootSaga() {
   // if necessary, start multiple sagas at once with `all`
@@ -272,7 +254,6 @@ export default function* rootSaga() {
     takeLatest(GET_TRENDS_REQUESTED, apiCallTrends),
     takeLatest(GET_SEARCH_REQUESTED, apiCallSearch),
     takeLatest(GET_VARIANT_REQUESTED, apiCallVariants),
-    takeLatest(SELECT_PRODUCT, selectProductSaga),
     takeLatest(GET_REVIEWS_REQUESTED, apiCallReviews)
   ];
 }

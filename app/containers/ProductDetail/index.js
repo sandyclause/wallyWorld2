@@ -23,24 +23,6 @@ import {
 import ProductCard from '../ProductCard';
 
 class ProductDetail extends React.PureComponent {
-  componentDidMount() {
-    const {
-      productData,
-      match,
-      dispatch,
-    } = this.props;
-
-    const itemId = match.params.itemId;
-
-    const variants = productData.get('variants');
-    console.log(productData, variants)
-    if (productData.size === 0) {
-      dispatch(getProduct(itemId))
-    } else {
-      return;
-    }
-
-  }
   
   render() {
     const {
