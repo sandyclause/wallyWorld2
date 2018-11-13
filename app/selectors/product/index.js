@@ -26,9 +26,15 @@ const makeSelectVariants = createSelector(
   state => state.get('variantData', List())
 );
 
+const makeSelectReviews = createSelector(
+  productState,
+  state => state.get('reviewsData', Map())
+);
+
 export {
   makeSelectProduct,
   makeSelectTrends,
   makeSelectSearchResults,
   makeSelectVariants,
+  makeSelectReviews,
 };

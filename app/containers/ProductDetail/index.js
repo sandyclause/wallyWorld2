@@ -21,9 +21,23 @@ import {
   getProduct
 } from '../../actions/product';
 import ProductCard from '../ProductCard';
+import ProductReviewsContainer from '../ProductReviewsContainer';
 
 class ProductDetail extends React.PureComponent {
-  
+
+  componentDidMount() {
+    const {
+      match,
+      dispatch,
+      productData,
+    } = this.props;
+
+    const itemId = match.params.itemId;
+    if (productData !== undefined) {
+      dispatch(getProduct(itemId));
+    };
+  }
+
   render() {
     const {
       productData,
@@ -119,7 +133,7 @@ class ProductDetail extends React.PureComponent {
               </Typography>
             </Grid>
 
-            {/* review container */}
+            {/* review summary container */}
             <Grid
               container={true}
               direction='row'
@@ -225,6 +239,9 @@ class ProductDetail extends React.PureComponent {
             {variants}
           </Grid>
         </Grid>
+        {
+          <ProductReviewsContainer />
+        }
       </Grid>
     );
   }

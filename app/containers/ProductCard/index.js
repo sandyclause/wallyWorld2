@@ -28,7 +28,7 @@ class ProductCard extends React.PureComponent {
     dispatch(getProduct(itemId));
   }
 
-  render(){
+  render() {
     const {
       productData,
       classes,

@@ -121,7 +121,7 @@ const fetchProduct = (itemId) => {
 
 // variants
 export function* apiCallVariants(variants) {
-  console.log('api call variants', variants.payload);
+  console.log('api call variants');
 
   // delay because calls are limited to 5 per second by api
   const delay = (ms) => new Promise(res => setTimeout(res, ms))
@@ -129,7 +129,6 @@ export function* apiCallVariants(variants) {
   if (variants.payload !== -1) {
     const variantsArray = variants.payload;
     const limitedVariantsArray = variantsArray.slice(0,5);
-    console.log(variantsArray, limitedVariantsArray)
 
     yield delay(500);
     try {
