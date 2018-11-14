@@ -36,6 +36,12 @@ import { translationMessages } from './i18n';
 // Import CSS reset and Global Styles
 import './global-styles';
 
+// Import Fontawesome Icons
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+library.add(faStar);
+
 // Create redux store with history
 const initialState = {};
 const history = createHistory();

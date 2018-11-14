@@ -11,9 +11,6 @@ import {
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router";
-import {
-  getProduct,
-} from '../../actions/product';
 
 class ProductCard extends React.PureComponent {
   handleClick = () => {
@@ -25,7 +22,6 @@ class ProductCard extends React.PureComponent {
 
     const itemId = productData.get('itemId');
     history.push(`/productDetail/${itemId}`);
-    dispatch(getProduct(itemId));
   }
 
   render() {

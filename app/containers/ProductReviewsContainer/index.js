@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import {
 	makeSelectReviews,
 } from '../../selectors/product';
+import Stars from '../../components/Stars';
 
 class ProductReviewsContainer extends React.PureComponent {
 
@@ -26,13 +27,14 @@ class ProductReviewsContainer extends React.PureComponent {
 
 		const reviews = reviewsData.get('reviews', List());
 		const reviewsNum = reviews.size;
-		const reviewsGroup = reviews.map(review => {
+		const reviewsGroup = reviews.map((review, index) => {
 			const title = review.get('title', '');
 			const reviewer = review.get('reviewer', '');
 			const rating = review.getIn(['overallRating', 'rating'], '');
 			const reviewText = review.get('reviewText');
 			return (
 				<Grid
+					key={index}
 					container={true}
 					direction='column'
 					wrap='nowrap'
@@ -47,7 +49,9 @@ class ProductReviewsContainer extends React.PureComponent {
 							direction='row'
 							wrap='nowrap'
 						>
-							<p>{rating}</p>
+							<Stars
+								starNum={rating}
+							/>
 							{reviewer}
 						</Grid>
 						<Typography>
