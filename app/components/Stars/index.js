@@ -17,7 +17,6 @@ const Stars = (props) => {
     )
   }
 
-  console.log(starsArray)
   return (
     starsArray.map((star) => {
       return star;

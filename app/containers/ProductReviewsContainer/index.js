@@ -17,6 +17,8 @@ import {
 	makeSelectReviews,
 } from '../../selectors/product';
 import Stars from '../../components/Stars';
+import ProductBarChart from '../../components/ReviewBarChart';
+import ReviewBarChart from '../../components/ReviewBarChart';
 
 class ProductReviewsContainer extends React.PureComponent {
 
@@ -75,8 +77,13 @@ class ProductReviewsContainer extends React.PureComponent {
 				wrap='nowrap'
 			>
 				<Typography>
-					{reviewsNum} of reviews
+					{reviewsNum} reviews
 				</Typography>
+
+				{/* review bar chart */}
+				<ReviewBarChart
+					reviewsData={reviewsData}
+				/>
 
 				{/* review */}
 				{
