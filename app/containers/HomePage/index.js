@@ -17,7 +17,7 @@ import { getTrends } from '../../actions/product';
 import { compose } from 'redux';
 
 import TrendsGroupContainer from '../TrendsGroupContainer';
-
+import HomePageCarousel from '../../components/HomePageCarousel';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
@@ -35,6 +35,7 @@ class HomePage extends React.PureComponent {
         <h1>
           test
         </h1>
+        <HomePageCarousel />
         <TrendsGroupContainer />
       </div>
     );
