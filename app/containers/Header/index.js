@@ -5,31 +5,59 @@ import {
 import { compose } from 'redux';
 import {
   withStyles,
+  Grid,
 } from '@material-ui/core';
-
+import {
+  withRouter
+} from "react-router";
 import SearchBar from 'containers/SearchBar';
-
-const styles = theme => ({
-})
+import walmartLogo from '../../images/walmartLogo.svg'
 
 class Header extends React.PureComponent {
   
+  handleClick = () => {
+    const {
+      history,
+    } = this.props;
 
+    history.push('/');
+  }
+  
   render() {
     const {
       classes
     } = this.props;
-
+    
+    const logo = <Grid
+        onClick={this.handleClick}
+        className={classes.logo}
+      >
+        <img src={walmartLogo} alt='walmart logo'/>
+      </Grid>
+    
     return (
-      <div style={{border: '1px solid red'}}>
-        <SearchBar />
-        header
-      </div>
+      <Grid style={{border: '1px solid red'}}>
+        <Grid
+          container={true}
+          direction='row'
+          wrap='nowrap'
+        >
+          {logo}
+          <SearchBar />
+        </Grid>
+      </Grid>
     );
   }
 }
 
+const styles = theme => ({
+  logo: {
+    cursor: 'pointer'
+  }
+})
+
 export default compose(
   connect(),
   withStyles(styles),
+  withRouter,
 )(Header);
