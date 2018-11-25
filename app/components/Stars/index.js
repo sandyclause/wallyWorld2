@@ -1,6 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from 'prop-types';
+import {
+  Grid,
+} from '@material-ui/core';
 
 const Stars = (props) => {
   const {
@@ -18,9 +21,17 @@ const Stars = (props) => {
   }
 
   return (
-    starsArray.map((star) => {
-      return star;
-    })
+    <Grid
+      container={true}
+      direction='row'
+      wrap='nowrap'
+    >
+      {
+        starsArray.map((star) => {
+          return star;
+        })
+      }
+    </Grid>
   )
 }
 

@@ -18,6 +18,9 @@ import {
   makeSelectVariants,
 } from '../../selectors/product';
 import {
+  Map,
+} from 'immutable';
+import {
   getProduct
 } from '../../actions/product';
 import ProductCard from '../ProductCard';
@@ -43,21 +46,30 @@ class ProductDetail extends React.PureComponent {
       productData,
       classes,
       variantsData,
+      match,
     } = this.props;
 
-    const title = productData.get('name');
-    const ratingImageURL = productData.get('customerRatingImage');
-    const numRating = productData.get('numReviews');
-    const lgImageURL = productData.get('largeImage');
-    const sellerInfo = productData.get('sellerInfo');
-    const price = productData.get('salePrice', '');
-    const msrp = productData.get('msrp', '');
-    const shortDesc = productData.get('shortDescription');
+    const itemId = match.params.itemId;
+    const product = productData && String(productData.get('itemId', '')) === itemId ? productData : Map();
+    console.log('data', {
+      product,
+      itemId,
+      productData
+    })
 
-    const longDesc = productData.get('longDescription');
-    const longDescDecoded = longDesc && renderHTML(decode(productData.get('longDescription')));
+    const title = product.get('name');
+    const ratingImageURL = product.get('customerRatingImage');
+    const numRating = product.get('numReviews');
+    const lgImageURL = product.get('largeImage');
+    const sellerInfo = product.get('sellerInfo');
+    const price = product.get('salePrice', '');
+    const msrp = product.get('msrp', '');
+    const shortDesc = product.get('shortDescription');
+
+    const longDesc = product.get('longDescription');
+    const longDescDecoded = longDesc && renderHTML(decode(product.get('longDescription')));
       
-    const msrpGroup = msrp 
+    const msrpGroup = msrp
       ? <Grid
           container={true}
           direction='row'
@@ -75,7 +87,7 @@ class ProductDetail extends React.PureComponent {
         </Grid>
       : null;
 
-    const variants = variantsData && variantsData
+    const variants = variantsData && String(variantsData.getIn([0, 'parentItemId'])) === itemId
       ? variantsData.map((variant, index) => {
         return <ProductCard
           productData={variant}

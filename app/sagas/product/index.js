@@ -86,12 +86,13 @@ export function* apiCallProduct(action) {
     } else {
       yield put(getVariantClear());
     }
+    
+    // call reviews
+    yield put(getReviews(action.payload));
   } catch(e) {
     yield put(getProductFailure(e));
   }
   
-  // call reviews
-  yield put(getReviews(action.payload));
 }
 
 const fetchProduct = (itemId) => {
