@@ -10,6 +10,7 @@ import {
 import {
   List,
   Map,
+  fromJS,
 } from 'immutable';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
@@ -25,34 +26,38 @@ class ReviewBarChart extends React.PureComponent {
     
     const reviews = reviewsData && reviewsData.get('reviews');
     const reviewStats = reviewsData && reviewsData.get('reviewStatistics', Map());
+    const totalReviewcCount = reviewStats.get('totalReviewCount', '');
 
     const ratingDistributions = reviewStats && reviewStats.get('ratingDistributions', List());
     console.log(ratingDistributions)
 
-    const ratingBars = ratingDistributions.reverse().map((rating, index) => {
+    const parsedReviews = ratingDistributions.size !== 0 ? ratingDistributions.reduce((acc, rating, index) => {
+      acc[rating.get('ratingValue')] = rating.get('count');
+      return acc;
+    }, {}) : null;
+
+    const immutableReviews = fromJS(parsedReviews);
+    
+    const ratingBars = immutableReviews && immutableReviews.reverse().map((review, key) => {
       return (
         <Grid
           container={true}
-          key={index}
+          key={key}
           direction='row'
           wrap='nowrap'
         >
           <p>
-            {rating.get('ratingValue')}
+            {key}
           </p>
           <p>
-            {rating.get('count')}
+            {review}
           </p>
         </Grid>
       )
-    })
-
+    }).valueSeq().toArray();
     
-    // const ratings = reviews && reviews.reduce((acc, review, index) => {
-    //   return acc.push(review.getIn(['overallRating', 'rating']));
-    // }, List())
-    // console.log(ratings)
-
+    console.log(ratingBars);
+    
     
     const averageOverallRating = reviewStats.get('averageOverallRating', '');
     console.log('average revs', averageOverallRating)

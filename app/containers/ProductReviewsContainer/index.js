@@ -17,7 +17,6 @@ import {
 	makeSelectReviews,
 } from '../../selectors/product';
 import Stars from '../../components/Stars';
-import ProductBarChart from '../../components/ReviewBarChart';
 import ReviewBarChart from '../../components/ReviewBarChart';
 
 class ProductReviewsContainer extends React.PureComponent {
