@@ -15,12 +15,14 @@ import {
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import Stars from '../Stars';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class ReviewBarChart extends React.PureComponent {
 
   render() {
 		const {
-			reviewsData,
+      reviewsData,
+      classes,
     } = this.props;
     
     
@@ -31,28 +33,64 @@ class ReviewBarChart extends React.PureComponent {
     const ratingDistributions = reviewStats && reviewStats.get('ratingDistributions', List());
     console.log(ratingDistributions)
 
-    const parsedReviews = ratingDistributions.size !== 0 ? ratingDistributions.reduce((acc, rating, index) => {
-      acc[rating.get('ratingValue')] = rating.get('count');
-      return acc;
-    }, {}) : null;
+    const parsedReviews = ratingDistributions.size !== 0 
+      ? ratingDistributions.reduce((acc, rating, index) => {
+          acc[rating.get('ratingValue')] = rating.get('count');
+          return acc;
+        }, {}) 
+      : null;
 
     const immutableReviews = fromJS(parsedReviews);
     
     const ratingBars = immutableReviews && immutableReviews.reverse().map((review, key) => {
       return (
         <Grid
+          className={classes.root}
           container={true}
-          key={key}
           direction='row'
           wrap='nowrap'
         >
-          <p>
-            {key}
-          </p>
-          <p>
-            {review}
-          </p>
-        </Grid>
+          <Grid
+            className={classes.starIcon}
+            container={true}
+            direction='row'
+            wrap='nowrap'
+            justify='center'
+            alignItems='center'
+            style={{background: 'red'}}
+          >
+            <Typography>
+              {key}
+            </Typography>
+            <FontAwesomeIcon
+              icon='star'
+            />
+          </Grid>
+          <Grid
+            container={true}
+            key={key}
+            direction='row'
+            wrap='nowrap'
+            className={classes.barContainer}
+          >
+            <Grid
+              item={true}
+              className={classes.bar}
+              style={{width: `${review / totalReviewcCount * 100}%`}}
+            >
+            </Grid>
+          </Grid>
+          <Grid
+            container={true}
+            justify='center'
+            alignItems='center'
+            className={classes.starCount}
+          >
+            <Typography>
+              {review}
+            </Typography>
+          </Grid>
+          </Grid>
       )
     }).valueSeq().toArray();
     
@@ -87,8 +125,23 @@ class ReviewBarChart extends React.PureComponent {
 
 const styles = {
   root: {
-
+    border: '1px solid red'
   },
+  barContainer: {
+    minWidth: '300px',
+    background: 'lightgrey',
+    margin: 10
+  },
+  bar: {
+    background: 'lightblue',
+    height: 10,
+  },
+  starIcon: {
+    width: 40
+  },
+  starCount: {
+    width: 40
+  }
 }
 
 ReviewBarChart.propTypes = {
