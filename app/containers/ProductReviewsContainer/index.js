@@ -18,56 +18,23 @@ import {
 } from '../../selectors/product';
 import Stars from '../../components/Stars';
 import ReviewBarChart from '../../components/ReviewBarChart';
+import ReviewsGroup from '../../components/ReviewsGroup';
 
 class ProductReviewsContainer extends React.PureComponent {
+	state = {
+		selectedReviewNumber: '-1',
+	}
+
+	setSelectedReviewNumber = (number) => {
+		this.setState({
+			selectedReviewNumber: number,
+		})
+	}
 
   render() {
 		const {
 			reviewsData,
 		} = this.props;
-
-		const reviews = reviewsData.get('reviews', List());
-		const reviewsNum = reviews.size;
-		const reviewsGroup = reviews.map((review, index) => {
-			const title = review.get('title', '');
-			const reviewer = review.get('reviewer', '');
-			const rating = review.getIn(['overallRating', 'rating'], '');
-			const reviewText = review.get('reviewText');
-			return (
-				<Grid
-					key={index}
-					container={true}
-					direction='column'
-					wrap='nowrap'
-				>
-					<Grid
-						container={true}
-						direction='column'
-						wrap='nowrap'
-					>
-						<Grid
-							container={true}
-							direction='row'
-							wrap='nowrap'
-						>
-							<Stars
-								starNum={rating}
-							/>
-							{reviewer}
-						</Grid>
-						<Typography>
-							{title}
-						</Typography>
-					</Grid>
-					<Grid
-						item={true}
-					>
-						{reviewText}
-					</Grid>
-					<Divider />
-				</Grid>
-			)
-		});
   
     return (
       <Grid
@@ -75,19 +42,17 @@ class ProductReviewsContainer extends React.PureComponent {
 				direction='column'
 				wrap='nowrap'
 			>
-				<Typography>
-					{reviewsNum} reviews
-				</Typography>
 
 				{/* review bar chart */}
 				<ReviewBarChart
 					reviewsData={reviewsData}
+					grabNumber={this.setSelectedReviewNumber}
 				/>
 
 				{/* review */}
-				{
-					reviewsGroup
-				}
+				<ReviewsGroup
+					selectedReviewNumber={this.state.selectedReviewNumber}
+				/>
       </Grid>
     )
   }

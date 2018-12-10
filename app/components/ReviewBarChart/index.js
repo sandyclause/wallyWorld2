@@ -23,8 +23,8 @@ class ReviewBarChart extends React.PureComponent {
 		const {
       reviewsData,
       classes,
+      grabNumber,
     } = this.props;
-    
     
     const reviews = reviewsData && reviewsData.get('reviews');
     const reviewStats = reviewsData && reviewsData.get('reviewStatistics', Map());
@@ -49,6 +49,8 @@ class ReviewBarChart extends React.PureComponent {
           container={true}
           direction='row'
           wrap='nowrap'
+          key={key}
+          onClick={() => grabNumber(key)}
         >
           <Grid
             className={classes.starIcon}
@@ -57,7 +59,6 @@ class ReviewBarChart extends React.PureComponent {
             wrap='nowrap'
             justify='center'
             alignItems='center'
-            style={{background: 'red'}}
           >
             <Typography>
               {key}
@@ -123,9 +124,10 @@ class ReviewBarChart extends React.PureComponent {
   }
 }
 
-const styles = {
+const styles = theme => ({
   root: {
-    border: '1px solid red'
+    border: '1px solid red',
+    cursor: 'pointer',
   },
   barContainer: {
     minWidth: '300px',
@@ -134,7 +136,7 @@ const styles = {
   },
   bar: {
     background: 'lightblue',
-    height: 10,
+    height: theme.spacing.unit,
   },
   starIcon: {
     width: 40
@@ -142,10 +144,11 @@ const styles = {
   starCount: {
     width: 40
   }
-}
+})
 
 ReviewBarChart.propTypes = {
   reviewsData: PropTypes.object.isRequired,
+  grabNumber: PropTypes.func.isRequired,
 }
 
 export default compose(
