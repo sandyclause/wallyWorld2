@@ -70,7 +70,11 @@ class ProductReviewsContainer extends React.PureComponent {
 				direction='column'
 				wrap='nowrap'
 			>
-
+				<Typography
+					variant='h6'
+				>
+					Reviews
+				</Typography>
 				{/* review bar chart */}
 				<ReviewBarChart
 					reviewsData={reviewsData}

@@ -23,6 +23,7 @@ const Stars = (props) => {
   return (
     <Grid
       container={true}
+      style={{width: 'auto'}}
       direction='row'
       wrap='nowrap'
     >

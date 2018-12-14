@@ -27,14 +27,11 @@ class ReviewsGroup extends React.PureComponent {
 		} = this.props;
 
 		const reviews = totalReviews.get('reviews', List());
-		console.log(reviews)
 		const filteredReviews = selectedReviewNumber === '-1'
 			? reviews
 			: reviews.filter((review) => {
 				return review.getIn(['overallRating', 'rating']) === selectedReviewNumber;
 			});
-
-		console.log(filteredReviews)
 
 		const reviewsNum = filteredReviews.size;
 		const reviewsGroup = filteredReviews.map((review, index) => {

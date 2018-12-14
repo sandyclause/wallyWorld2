@@ -45,7 +45,7 @@ class ReviewBarChart extends React.PureComponent {
     const ratingBars = immutableReviews && immutableReviews.reverse().map((review, key) => {
       return (
         <Grid
-          className={classes.root}
+          className={classes.ratingBars}
           container={true}
           direction='row'
           wrap='nowrap'
@@ -91,7 +91,7 @@ class ReviewBarChart extends React.PureComponent {
               {review}
             </Typography>
           </Grid>
-          </Grid>
+        </Grid>
       )
     }).valueSeq().toArray();
     
@@ -101,9 +101,21 @@ class ReviewBarChart extends React.PureComponent {
     const averageOverallRating = reviewStats.get('averageOverallRating', '');
     console.log('average revs', averageOverallRating)
     const averageRating = reviewsData 
-      ? <Stars
-          starNum={averageOverallRating}
-        />
+      ? <Grid
+          container={true}
+          direction='row'
+          wrap='nowrap'
+        >
+          <Typography>
+            Overall
+          </Typography>
+          <Stars
+            starNum={averageOverallRating}
+          />
+          <Typography>
+            {averageOverallRating}
+          </Typography>
+        </Grid>
       : null;
 
     
@@ -111,14 +123,37 @@ class ReviewBarChart extends React.PureComponent {
     return (
       <Grid
 				container={true}
-				direction='column'
-				wrap='nowrap'
+				direction='row'
+        wrap='wrap'
+        className={classes.root}
+        spacing={32}
 			>
-			  <Typography>
-          Average Customer Ratings
-        </Typography>
-        {averageRating}
-        {ratingBars}
+        <Grid
+          container={true}
+          item={true}
+          lg={6}
+          md={6}
+          direction='column'
+          wrap='nowrap'
+        >
+          <Typography>
+            Rating Snapshot
+          </Typography>
+          <Typography>
+            Select a row below to filter reviews.
+          </Typography>
+          {ratingBars}
+        </Grid>
+        <Grid
+          item={true}
+          lg={6}
+          md={6}
+        >
+          <Typography>
+            Average Customer Ratings
+          </Typography>
+          {averageRating}
+        </Grid>
       </Grid>
     )
   }
@@ -126,6 +161,9 @@ class ReviewBarChart extends React.PureComponent {
 
 const styles = theme => ({
   root: {
+    padding: `${theme.spacing.unit * 3}px 0`,
+  },
+  ratingBars: {
     border: '1px solid red',
     cursor: 'pointer',
   },

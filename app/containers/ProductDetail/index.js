@@ -25,6 +25,10 @@ import {
 } from '../../actions/product';
 import ProductCard from '../ProductCard';
 import ProductReviewsContainer from '../ProductReviewsContainer';
+import {
+  Carousel
+} from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 class ProductDetail extends React.PureComponent {
 
@@ -60,7 +64,6 @@ class ProductDetail extends React.PureComponent {
     const title = product.get('name');
     const ratingImageURL = product.get('customerRatingImage');
     const numRating = product.get('numReviews');
-    const lgImageURL = product.get('largeImage');
     const sellerInfo = product.get('sellerInfo');
     const price = product.get('salePrice', '');
     const msrp = product.get('msrp', '');
@@ -95,6 +98,23 @@ class ProductDetail extends React.PureComponent {
         />
         }).valueSeq().toArray()
       : null;
+
+    const imageEntities = product.get('imageEntities');
+    const productImages = imageEntities && <Grid>
+      <Carousel autoPlay={false} infiniteLoop={true} interval={4000} showStatus={false} showThumbs={true}>
+        {
+          imageEntities
+            .reverse()
+            .map((imageData, index) => {
+              return <div
+                key={index}
+              >
+                <img src={imageData.get('largeImage')} alt=""/>
+              </div>
+            })
+        }
+      </Carousel>
+    </Grid>;
     
     return (
       <Grid
@@ -115,11 +135,7 @@ class ProductDetail extends React.PureComponent {
             item={true}
             lg={6}
           >
-            {
-              lgImageURL
-              ? <img src={lgImageURL} alt={`image of ${title}`} />
-              : null
-            }
+            {productImages}
           </Grid>
 
           {/* side infoContainer */}
