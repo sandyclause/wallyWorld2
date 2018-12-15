@@ -100,27 +100,32 @@ class ProductDetail extends React.PureComponent {
       : null;
 
     const imageEntities = product.get('imageEntities');
-    const productImages = imageEntities && <Grid>
-      <Carousel
-        autoPlay={false}
-        infiniteLoop={true}
-        interval={4000}
-        showStatus={false}
-        showThumbs={true}
-      >
-        {
-          imageEntities
-            .reverse()
-            .map((imageData, index) => {
-              return <div
-                key={index}
-              >
-                <img src={imageData.get('largeImage')} alt=""/>
-              </div>
-            })
-        }
-      </Carousel>
-    </Grid>;
+    const largeImage = product.get('largeImage');
+    const productImages = imageEntities 
+      ? <Grid>
+          <Carousel
+            autoPlay={false}
+            infiniteLoop={true}
+            interval={4000}
+            showStatus={false}
+            showThumbs={true}
+          >
+            {
+              imageEntities
+                .reverse()
+                .map((imageData, index) => {
+                  return <div
+                    key={index}
+                  >
+                    <img src={imageData.get('largeImage')} alt=""/>
+                  </div>
+                })
+            }
+          </Carousel>
+        </Grid>
+      : <Grid>
+          <img src={largeImage} alt={`lareg image of ${product.name}`}/>
+        </Grid>
     
     return (
       <Grid
