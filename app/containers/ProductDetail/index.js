@@ -101,7 +101,13 @@ class ProductDetail extends React.PureComponent {
 
     const imageEntities = product.get('imageEntities');
     const productImages = imageEntities && <Grid>
-      <Carousel autoPlay={false} infiniteLoop={true} interval={4000} showStatus={false} showThumbs={true}>
+      <Carousel
+        autoPlay={false}
+        infiniteLoop={true}
+        interval={4000}
+        showStatus={false}
+        showThumbs={true}
+      >
         {
           imageEntities
             .reverse()
@@ -129,11 +135,14 @@ class ProductDetail extends React.PureComponent {
           direction='row'
           wrap='wrap'
           className={classes.pictureSideInfoContainer}
+          spacing={32}
         >
           {/* picture container */}
           <Grid
             item={true}
             lg={6}
+            md={6}
+            sm={12}
           >
             {productImages}
           </Grid>
@@ -142,6 +151,8 @@ class ProductDetail extends React.PureComponent {
           <Grid
             item={true}
             lg={6}
+            md={6}
+            sm={12}
           >
             {/* title container */}
             <Grid
@@ -204,7 +215,6 @@ class ProductDetail extends React.PureComponent {
               </Typography>
               {msrpGroup}
             </Grid>
-
           </Grid>
 
         </Grid>
