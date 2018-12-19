@@ -37,14 +37,12 @@ import { translationMessages } from './i18n';
 import './global-styles';
 
 // Import Fontawesome Icons
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faStar,
-  faStarHalf
-} from '@fortawesome/free-solid-svg-icons';
-library.add(faStar);
-library.add(faStarHalf);
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+
+// Add all icons to the library so you can use it in your page
+library.add(fas, far)
 
 // Create redux store with history
 const initialState = {};

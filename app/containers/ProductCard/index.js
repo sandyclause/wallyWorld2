@@ -11,13 +11,13 @@ import {
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router";
+import Stars from '../../components/Stars';
 
 class ProductCard extends React.PureComponent {
   handleClick = () => {
     const {
       productData,
       history,
-      dispatch,
     } = this.props;
 
     const itemId = productData.get('itemId');
@@ -31,11 +31,10 @@ class ProductCard extends React.PureComponent {
     } = this.props;
   
     const title = productData.get('name', 'untitled');
-    const review = productData.get('customerRating', '');
+    const reviewRating = productData.get('customerRating', '');
     const price = productData.get('salePrice', '');
     const msrp = productData.get('msrp', '');
     const thumbnailDefault = productData.get('mediumImage', '');
-    const customerRatingImage = productData.get('customerRatingImage', '');
   
     const msrpGroup = msrp 
       ? <Grid
@@ -80,9 +79,11 @@ class ProductCard extends React.PureComponent {
             justify='flex-start'
           >
             {
-              customerRatingImage 
-              ? <img src={customerRatingImage} alt={`thumbnail image of review rating ${review}`}/>
-              : null
+              reviewRating
+                ? <Stars
+                    starNum={reviewRating}
+                  />
+                : null
             }
           </Grid>
           <Grid

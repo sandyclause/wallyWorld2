@@ -100,12 +100,17 @@ class ReviewBarChart extends React.PureComponent {
     
     const averageOverallRating = reviewStats.get('averageOverallRating', '');
     console.log('average revs', averageOverallRating)
-    const averageRating = reviewsData 
+
+    // api review stats of 'averageOverallRating' sometimes returns a string of null
+    const averageRating = reviewsData && averageOverallRating !== 'null'
       ? <Grid
           container={true}
           direction='row'
           wrap='nowrap'
         >
+          <Typography>
+            Average Customer Ratings
+          </Typography>
           <Typography>
             Overall
           </Typography>
@@ -118,8 +123,6 @@ class ReviewBarChart extends React.PureComponent {
         </Grid>
       : null;
 
-    
-  
     return (
       <Grid
 				container={true}
@@ -149,9 +152,6 @@ class ReviewBarChart extends React.PureComponent {
           lg={6}
           md={6}
         >
-          <Typography>
-            Average Customer Ratings
-          </Typography>
           {averageRating}
         </Grid>
       </Grid>

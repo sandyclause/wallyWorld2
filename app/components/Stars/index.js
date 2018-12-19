@@ -5,10 +5,6 @@ import {
   Grid,
 } from '@material-ui/core';
 
-const isOdd = (number) => {
-  return !!(number % 2);
-}
-
 const Stars = (props) => {
   const {
     starNum
@@ -16,23 +12,22 @@ const Stars = (props) => {
   
   let starsArray = [];
 
-  console.log(starNum)
   for (let i = 0; i < starNum; i++) {
     if ((starNum - i) < 1) {
       starsArray.push(
         <FontAwesomeIcon
           key={i}
-          icon='star-half'
+          icon='star-half-alt'
         />
       )
-    } else {
+    } 
+    else {
       starsArray.push(
         <FontAwesomeIcon
           key={i}
-          icon='star'
+          icon={['fas', 'star']}
         />
       )
-
     }
   }
 
