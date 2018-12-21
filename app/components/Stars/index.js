@@ -31,6 +31,18 @@ const Stars = (props) => {
     }
   }
 
+  let starsFinal = starsArray;
+  console.log(starsArray.length)
+  const missingStar = 5 - starsArray.length;
+  for (let i = (5 - missingStar); i < 5; i++) {
+    starsFinal.push(
+      <FontAwesomeIcon
+        key={i + Date.now()}
+      icon={['far', 'star']}
+    />
+    )
+  }
+
   return (
     <Grid
       container={true}
@@ -39,7 +51,7 @@ const Stars = (props) => {
       wrap='nowrap'
     >
       {
-        starsArray.map((star) => {
+        starsFinal.map((star) => {
           return star;
         })
       }
