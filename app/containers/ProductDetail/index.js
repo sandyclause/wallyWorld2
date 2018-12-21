@@ -29,6 +29,7 @@ import {
   Carousel
 } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import ReactLoading from 'react-loading';
 
 class ProductDetail extends React.PureComponent {
 
@@ -133,6 +134,11 @@ class ProductDetail extends React.PureComponent {
         direction='column'
         className={classes.root}
       >
+        {
+          productData.size === 0
+            ? <ReactLoading type='spin' color='#007dc6' height={60} width={30} />
+            : null
+        }
         <CssBaseline />
         {/* picture and sideInfo containers */}
         <Grid

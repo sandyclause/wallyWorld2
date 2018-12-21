@@ -32,7 +32,7 @@ const Stars = (props) => {
   }
 
   let starsFinal = starsArray;
-  console.log(starsArray.length)
+  
   const missingStar = 5 - starsArray.length;
   for (let i = (5 - missingStar); i < 5; i++) {
     starsFinal.push(
