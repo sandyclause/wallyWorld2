@@ -30,6 +30,7 @@ import {
 } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import ReactLoading from 'react-loading';
+import Stars from '../../components/Stars';
 
 class ProductDetail extends React.PureComponent {
 
@@ -39,6 +40,8 @@ class ProductDetail extends React.PureComponent {
       dispatch,
       productData,
     } = this.props;
+
+    window.scrollTo(0, 0)
 
     const itemId = match.params.itemId;
     if (productData !== undefined) {
@@ -63,13 +66,12 @@ class ProductDetail extends React.PureComponent {
     })
 
     const title = product.get('name');
-    const ratingImageURL = product.get('customerRatingImage');
     const numRating = product.get('numReviews');
     const sellerInfo = product.get('sellerInfo');
     const price = product.get('salePrice', '');
     const msrp = product.get('msrp', '');
     const shortDesc = product.get('shortDescription');
-
+    const customerRating = product.get('customerRating');
     const longDesc = product.get('longDescription');
     const longDescDecoded = longDesc && renderHTML(decode(product.get('longDescription')));
       
@@ -196,9 +198,9 @@ class ProductDetail extends React.PureComponent {
                 item={true}
               >
                 {
-                  ratingImageURL 
-                  ? <img src={ratingImageURL} alt="image of the review stars" />
-                  : null
+                  <Stars
+                    starNum={customerRating}
+                  />
                 }
               </Grid>
               <Grid
