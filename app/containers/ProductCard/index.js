@@ -36,21 +36,52 @@ class ProductCard extends React.PureComponent {
     const msrp = productData.get('msrp', '');
     const thumbnailDefault = productData.get('mediumImage', '');
   
-    const msrpGroup = msrp 
+    const msrpGroup = msrp && price
       ? <Grid
           container={true}
-          direction='row'
+          direction='column'
           wrap='nowrap'
           justify='flex-start'
+          alignItems='center'
+          style={{border: '1px solid red'}}
         >
-          <Typography>Was</Typography>
-          <Typography
-            className={classes.msrp}
+          <Grid
+            container={true}
+            direction='row'
+            wrap='nowrap'
           >
-            ${msrp}
-          </Typography>
+            <span className={classes.priceSign}>$</span>
+            <Typography
+              variant='h3'
+              color='primary'
+            >
+              {price}
+            </Typography>
+          </Grid>
+          <Grid
+            container={true}
+            direction='row'
+            wrap='nowrap'
+          >
+            <Typography>Was</Typography>
+            <Typography
+              variant='h5'
+              className={classes.msrp}
+            >
+              ${msrp}
+            </Typography>
+          </Grid>
         </Grid>
-      : null;
+      : 
+        <Grid
+          style={{border: '1px solid blue'}}
+        >
+          <Typography
+            variant='h5'
+          >
+            ${msrp}{price}
+          </Typography>
+        </Grid>;
   
     return (
       <Paper>
@@ -85,21 +116,6 @@ class ProductCard extends React.PureComponent {
                   />
                 : null
             }
-          </Grid>
-          <Grid
-            container={true}
-            direction='row'
-            wrap='nowrap'
-            justify='flex-start'
-          >
-            <span
-              className={classes.priceSign}
-            >$</span>
-            <Typography
-              className={classes.price}
-            >
-              {price}
-            </Typography>
           </Grid>
           {msrpGroup}
         </Grid>
