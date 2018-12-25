@@ -129,7 +129,7 @@ export function* apiCallVariants(variants) {
 
   if (variants.payload !== -1) {
     const variantsArray = variants.payload;
-    const limitedVariantsArray = variantsArray.slice(0,5);
+    const limitedVariantsArray = variantsArray.slice(0,4);
 
     yield delay(500);
     try {

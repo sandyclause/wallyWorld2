@@ -75,23 +75,58 @@ class ProductDetail extends React.PureComponent {
     const longDesc = product.get('longDescription');
     const longDescDecoded = longDesc && renderHTML(decode(product.get('longDescription')));
       
-    const msrpGroup = msrp
+    console.log('price', {
+      price,
+      msrp,
+      customerRating,
+    })
+    const msrpGroup = msrp && price
       ? <Grid
           container={true}
-          direction='row'
+          direction='column'
           wrap='nowrap'
           justify='flex-start'
           alignItems='center'
+          style={{border: '1px solid red'}}
         >
-          <Typography>Was</Typography>
+          <Grid
+            container={true}
+            direction='row'
+            wrap='nowrap'
+          >
+            <span className={classes.priceSign}>$</span>
+            <Typography
+              variant='h3'
+              color='primary'
+            >
+              {price}
+            </Typography>
+          </Grid>
+          <Grid
+            container={true}
+            direction='row'
+            wrap='nowrap'
+          >
+            <Typography>Was</Typography>
+            <Typography
+              variant='h5'
+              className={classes.msrp}
+            >
+              ${msrp}
+            </Typography>
+          </Grid>
+        </Grid>
+      : 
+        <Grid
+          style={{border: '1px solid blue'}}
+        >
           <Typography
             variant='h5'
-            className={classes.msrp}
           >
-            ${msrp}
+            ${msrp}{price}
           </Typography>
-        </Grid>
-      : null;
+        </Grid>;
+
 
     const variants = variantsData && String(variantsData.getIn([0, 'parentItemId'])) === itemId
       ? variantsData.map((variant, index) => {
@@ -198,9 +233,9 @@ class ProductDetail extends React.PureComponent {
                 item={true}
               >
                 {
-                  <Stars
+                  customerRating ? <Stars
                     starNum={customerRating}
-                  />
+                  /> : null
                 }
               </Grid>
               <Grid
@@ -219,13 +254,6 @@ class ProductDetail extends React.PureComponent {
             <Grid
               container={true}
             >
-              <span className={classes.priceSign}>$</span>
-              <Typography
-                variant='h3'
-                color='primary'
-              >
-                {price}
-              </Typography>
               {msrpGroup}
             </Grid>
           </Grid>
