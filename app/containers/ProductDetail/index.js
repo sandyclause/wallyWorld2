@@ -33,8 +33,15 @@ import ReactLoading from 'react-loading';
 import Stars from '../../components/Stars';
 
 class ProductDetail extends React.PureComponent {
+  state = {
+    imageStatus: ''
+  }
 
   componentDidMount() {
+    this.setState({
+      imageStatus: ''
+    })
+    
     const {
       match,
       dispatch,
@@ -47,6 +54,13 @@ class ProductDetail extends React.PureComponent {
     if (productData !== undefined) {
       dispatch(getProduct(itemId));
     };
+
+  }
+
+  handleImageLoaded = () => {
+    this.setState({
+      imageStatus: 'loaded'
+    })
   }
 
   render() {
@@ -57,13 +71,12 @@ class ProductDetail extends React.PureComponent {
       match,
     } = this.props;
 
+    const {
+      imageStatus
+    } = this.state;
+
     const itemId = match.params.itemId;
     const product = productData && String(productData.get('itemId', '')) === itemId ? productData : Map();
-    console.log('data', {
-      product,
-      itemId,
-      productData
-    })
 
     const title = product.get('name');
     const numRating = product.get('numReviews');
@@ -75,11 +88,6 @@ class ProductDetail extends React.PureComponent {
     const longDesc = product.get('longDescription');
     const longDescDecoded = longDesc && renderHTML(decode(product.get('longDescription')));
       
-    console.log('price', {
-      price,
-      msrp,
-      customerRating,
-    })
     const msrpGroup = msrp && price
       ? <Grid
           container={true}
@@ -155,14 +163,22 @@ class ProductDetail extends React.PureComponent {
                   return <div
                     key={index}
                   >
-                    <img src={imageData.get('largeImage')} alt=""/>
+                    <img
+                      src={imageData.get('largeImage')}
+                      alt={`large image of ${product.name}`}
+                      onLoad={this.handleImageLoaded()}
+                    />
                   </div>
                 })
             }
           </Carousel>
         </Grid>
       : <Grid>
-          <img src={largeImage} alt={`lareg image of ${product.name}`}/>
+          <img
+            src={largeImage}
+            alt={`large image of ${product.name}`}
+            onLoad={this.handleImageLoaded()}
+          />
         </Grid>
     
     return (
@@ -192,7 +208,13 @@ class ProductDetail extends React.PureComponent {
             md={6}
             sm={12}
           >
-            {productImages}
+            {
+              imageStatus === 'loaded'
+                ?
+                  productImages
+                :
+                  <ReactLoading type='spin' color='#007dc6' height={60} width={30} />
+            }
           </Grid>
 
           {/* side infoContainer */}

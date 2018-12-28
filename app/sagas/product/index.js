@@ -40,7 +40,6 @@ import {
 
 // reviews
 export function* apiCallReviews(action) {
-  console.log('review saga fired', action.payload)
   try {
     const data = yield call(fetchReviews, action.payload);
     yield put(getReviewsSuccess(data));
@@ -76,7 +75,6 @@ const fetchReviews = (itemId) => {
 
 // product
 export function* apiCallProduct(action) {
-  console.log('product saga fired', action.payload)
   try {
     const data = yield call(fetchProduct, action.payload);
     const variants = data.get('variants');
@@ -122,7 +120,6 @@ const fetchProduct = (itemId) => {
 
 // variants
 export function* apiCallVariants(variants) {
-  console.log('api call variants');
 
   // delay because calls are limited to 5 per second by api
   const delay = (ms) => new Promise(res => setTimeout(res, ms))
@@ -137,7 +134,6 @@ export function* apiCallVariants(variants) {
       yield put(getVariantSuccess(List(variantsData)));
     } catch(e) {
       yield put(getVariantFailure(e));
-      console.log(e)
     }
   } else {
     return;
@@ -145,7 +141,6 @@ export function* apiCallVariants(variants) {
 }
 
 const fetchVariants = (params) => {
-  console.log('fetch variants func ------------------')
   return axios({
     url: "https://proxy.hackeryou.com",
     method: "GET",
@@ -173,7 +168,6 @@ const fetchVariants = (params) => {
 
 // trends
 export function* apiCallTrends() {
-  console.log('callTrends saga fired')
   try {
     const data = yield call(fetchTrends);
     yield put(getTrendsSuccess(data));
@@ -185,7 +179,6 @@ export function* apiCallTrends() {
 }
 
 const fetchTrends = () => {
-  console.log('fetch Trends func----------------')
   return axios({
     url: "https://proxy.hackeryou.com",
     method: "GET",

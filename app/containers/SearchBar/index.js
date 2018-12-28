@@ -48,7 +48,6 @@ class SearchBar extends React.PureComponent {
     const query = this.state.input;
     dispatch(getSearch(query));
     history.push(`/search/${query}`);
-    console.log('submit fired')
   }
 
   render() {

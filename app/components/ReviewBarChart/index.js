@@ -31,7 +31,6 @@ class ReviewBarChart extends React.PureComponent {
     const totalReviewcCount = reviewStats.get('totalReviewCount', '');
 
     const ratingDistributions = reviewStats && reviewStats.get('ratingDistributions', List());
-    console.log(ratingDistributions)
 
     const parsedReviews = ratingDistributions.size !== 0 
       ? ratingDistributions.reduce((acc, rating, index) => {
@@ -95,11 +94,7 @@ class ReviewBarChart extends React.PureComponent {
       )
     }).valueSeq().toArray();
     
-    console.log(ratingBars);
-    
-    
     const averageOverallRating = reviewStats.get('averageOverallRating', '');
-    console.log('average revs', averageOverallRating)
 
     // api review stats of 'averageOverallRating' sometimes returns a string of null
     const averageRating = reviewsData && averageOverallRating !== 'null'
